@@ -690,6 +690,12 @@ function IciclePlus:SetupOptions() -- {{{
 						order = 9,
 						values = self:GetSpellListOfClass("Warrior")
 					},
+					paladin = {
+						type = 'multiselect',
+						name = "Paladin",
+						order = 10,
+						values = self:GetSpellListOfClass("Paladin")
+					},
 					misc = {
 						type = 'multiselect',
 						name = "Racials / Miscellaneous",
