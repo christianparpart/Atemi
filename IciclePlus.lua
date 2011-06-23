@@ -684,7 +684,7 @@ function IciclePlus:SetupOptions() -- {{{
 						order = 8,
 						values = self:GetSpellListOfClass("DeathKnight")
 					},
-					druid = {
+					warrior = {
 						type = 'multiselect',
 						name = "Warrior",
 						order = 9,
