@@ -1,0 +1,15 @@
+IciclePlus Todo List:
+--------------------
+
+* localization: for at least 'en' and 'de'
+* UI: auto-adjust cooldown icon list if they exceed the width of its parent frame (nameplate)
+	* make this optional by configuration
+* configuration: add profile-support
+
+LONGTERM TODO TODO:
+-------------------
+
+* modularize cooldown instances into its own "Cooldown"-class and provide different representation classes:
+	* PlatedCooldown -- attached to the players nameplate
+	* GladifiedCooldown -- attached to the player frame of Gladius
+	* BarCooldown -- attached to a seperate bar-list frame of cooldowns.
