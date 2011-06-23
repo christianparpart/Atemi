@@ -791,7 +791,7 @@ function IciclePlus:OpenConfig()
 end
 
 function IciclePlus:Debug(...)
-	self:Print("debug:", ...)
+--	self:Print("debug:", ...)
 end
 
 function IciclePlus:SetEnable(value)
@@ -1014,10 +1014,6 @@ function IciclePlus:OnTimerCallback(elapsed)
 				for i = 1, #playerCooldowns do
 					playerCooldowns[i]:SetParent(frame)
 					playerCooldowns[i]:Show()
-				end
-
-				-- purge expired player cooldowns
-				for k, v in pairs(playerCooldowns) do
 				end
 
 				-- add icons to nameplate
