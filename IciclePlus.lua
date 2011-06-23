@@ -36,6 +36,7 @@ IciclePlus.CooldownDB = { -- {{{
 	[11876] = 120,				--"War Stomp",
 	[69041] = 120,				--"Rocket Barrage",
 	[42292] = 120,				--"PvP Trinket",
+	[69070] = 120,				-- Goblin: Rocket Jump
 
 	--------------------------------------------------------------------------
 	--Pets(Death Knight)
@@ -475,6 +476,7 @@ IciclePlus.ClassCooldownMap = { -- {{{
 		58984,  -- Shadowmeld (Nightelf racial)
 		59752,  -- Every Man for Himself (Human racial)
 		42292,  -- PvP Trinket
+		69070,  -- Goblin: Rocket Jump
 	},
 } -- }}}
 
