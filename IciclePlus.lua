@@ -833,6 +833,11 @@ function IciclePlus:OnDisable()
 end
 
 function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, _, auraType)
+	-- skip things like nonames ;-)
+	if srcName == nil then
+		return
+	end
+
 	local isHostile = bit.band(srcFlags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0
 	local isSpellCast = eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" or eventType == "SPELL_MISSED" or eventType == "SPELL_SUMMON"
 	local isCooldown = true -- self.CooldownDB[spellID] ~= nil
@@ -845,6 +850,9 @@ function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, src
 		local playerName = strmatch(srcName, "[%P]+")
 
 		-- initialize player spell set, if this is the first time we see this player cast
+		if not self.cooldownTimers[playerName] then
+			self.cooldownTimers[playerName] = {}
+		end
 		if not self.cooldownTimestamps[playerName] then
 			self.cooldownTimestamps[playerName] = {}
 		end
@@ -859,7 +867,7 @@ function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, src
 				if cooldown and self:IsResetableSpell(spellID, cooldown.spellID) then
 					self:Debug("- found resetable cooldown: " .. cooldown.name)
 					cooldown:Hide()
-					cooldown:GetParent().icicle = 0
+					--cooldown:GetParent().icicle = 0
 					cooldown:SetParent(nil)
 					tremove(playerCooldowns, i)
 					c = c + 1
