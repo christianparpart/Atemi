@@ -1,18 +1,12 @@
--- IciclePlus
+-- Atemi
 -- Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>
 --
 -- This addon is inspired and based on Icicle, which I was to improve
 -- UI-based configurability and a higher focus on Arena cooldowns.
 
-IciclePlus = LibStub("AceAddon-3.0"):NewAddon("IciclePlus", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
+Atemi = LibStub("AceAddon-3.0"):NewAddon("Atemi", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
 
--- {{{ some generic utility/helper functions
-local function round(value)
-	return ceil(value - 0.5)
-end
--- }}}
-
-IciclePlus.CooldownDB = { -- {{{
+Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	--------------------------------------------------------------------------
 	--Misc
 	[28730] = 120,				--"Arcane Torrent",
@@ -165,6 +159,8 @@ IciclePlus.CooldownDB = { -- {{{
 	[23989] = 180,				--"Readiness",
 	[34490] = 20,				--"Silencing Shot",
 	[19574] = 90,				--"Bestial Wrath",      
+	[1499] = 24,				-- Freezing Trap
+	[13809] = 24,				-- Ice Trap
 
 	--------------------------------------------------------------------------
 	--Mage
@@ -310,7 +306,7 @@ IciclePlus.CooldownDB = { -- {{{
 	[46968] = 17,				--"Shockwave",
 } -- }}}
 
-IciclePlus.ClassCooldownMap = { -- {{{
+Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 	["Rogue"] = {
 		2094,   -- Blind
 		1766,   -- Kick
@@ -378,6 +374,8 @@ IciclePlus.ClassCooldownMap = { -- {{{
 		23989,  -- Readiness
 		34490,  -- Silencing Shot
 		19574,  -- Bestial Wrath
+		1499,   -- Freezing Trap
+		13809,  -- Ice Trap
 	},
 	["Druid"] = {
 		22812,  -- Barkskin
@@ -480,9 +478,9 @@ IciclePlus.ClassCooldownMap = { -- {{{
 	},
 } -- }}}
 
--- {{{ IciclePlus.CooldownResetMap
+-- {{{ Atemi.COOLDOWN_RESET_MAP
 -- Maps cooldown-reset spells to their respective set of spells they reset.
-IciclePlus.CooldownResetMap = {
+Atemi.COOLDOWN_RESET_MAP = {
 	[14185] = { -- Rogue: Preparation
 		2983,  -- Sprint
 		1856,  -- Vanish
@@ -498,6 +496,8 @@ IciclePlus.CooldownResetMap = {
 		19503, -- Scatter Shot
 		3045,  -- Rapid Fire
 		53351, -- Kill Shot
+		1499,  -- Freezing Trap
+		13809, -- Ice Trap
 	},
 	[11958] = { -- Mage: Cold Snap
 		44572, -- Deep Freeze
@@ -510,26 +510,28 @@ IciclePlus.CooldownResetMap = {
 }
 -- }}}
 
-IciclePlus.defaults = { -- {{{
+Atemi.defaults = { -- {{{
 	profile = {
 		xOffset = 0,
 		yOffset = 22,
 		gapSize = 2,        -- gap in pixel between the cooldown icons
 		iconSize = 22,      -- size in pixel of each cooldown icon
+		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
 		fontSize = ceil(22 - 22 / 2),
-		fontPath = "Interface\\AddOns\\IciclePlus\\Hooge0655.ttf",
+		fontPath = "Interface\\AddOns\\Atemi\\Hooge0655.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
 		spells = {
 			44572, -- Deep Freeze
-			19503, -- Scatter Shot
 			82676, -- Ring of Frost
+			19503, -- Scatter Shot
 		}
 	}
 } -- }}}
 
-function IciclePlus:SetupOptions() -- {{{
+-- {{{ configuration
+function Atemi:setupOptions()
 	self.options = {
-		name = "IciclePlus",
+		name = "Atemi",
 		type = 'group',
 		handler = self,
 
@@ -539,8 +541,8 @@ function IciclePlus:SetupOptions() -- {{{
 				name = 'Enable',
 				desc = 'Enables / disables this AddOn',
 				order = 1,
-				set = function(info, value) IciclePlus:SetEnable(value) end,
-				get = function(info) return IciclePlus:IsEnabled() end
+				set = function(info, value) Atemi:SetEnable(value) end,
+				get = function(info) return Atemi:IsEnabled() end
 			},
 			general = {
 				type = 'group',
@@ -564,10 +566,10 @@ function IciclePlus:SetupOptions() -- {{{
 						max = 64,
 						step = 1,
 						get = function()
-							return IciclePlus.db.profile.gapSize
+							return Atemi.db.profile.gapSize
 						end,
 						set = function(info, value)
-							IciclePlus.db.profile.gapSize = value
+							Atemi.db.profile.gapSize = value
 						end
 					},
 					iconSize = {
@@ -578,10 +580,10 @@ function IciclePlus:SetupOptions() -- {{{
 						max = 128,
 						step = 1,
 						get = function()
-							return IciclePlus.db.profile.iconSize
+							return Atemi.db.profile.iconSize
 						end,
 						set = function(info, value)
-							IciclePlus.db.profile.iconSize = value
+							Atemi.db.profile.iconSize = value
 						end
 					},
 					fontSize = {
@@ -592,10 +594,10 @@ function IciclePlus:SetupOptions() -- {{{
 						max = 128,
 						step = 1,
 						get = function()
-							return IciclePlus.db.profile.fontSize
+							return Atemi.db.profile.fontSize
 						end,
 						set = function(info, value)
-							IciclePlus.db.profile.fontSize = value
+							Atemi.db.profile.fontSize = value
 						end
 					},
 					xOffset = {
@@ -606,10 +608,10 @@ function IciclePlus:SetupOptions() -- {{{
 						max = 64,
 						step = 1,
 						get = function()
-							return IciclePlus.db.profile.xOffset
+							return Atemi.db.profile.xOffset
 						end,
 						set = function(info, value)
-							IciclePlus.db.profile.xOffset = value
+							Atemi.db.profile.xOffset = value
 						end
 					},
 					yOffset = {
@@ -620,10 +622,10 @@ function IciclePlus:SetupOptions() -- {{{
 						max = 64,
 						step = 1,
 						get = function()
-							return IciclePlus.db.profile.yOffset
+							return Atemi.db.profile.yOffset
 						end,
 						set = function(info, value)
-							IciclePlus.db.profile.yOffset = value
+							Atemi.db.profile.yOffset = value
 						end
 					}
 				}
@@ -706,14 +708,13 @@ function IciclePlus:SetupOptions() -- {{{
 			}
 		},
 	}
-end -- }}}
+end
 
--- {{{ option callbacks
-function IciclePlus:_GetSpellEnabled(info, spellID)
+function Atemi:_GetSpellEnabled(info, spellID)
 	return self:IsSpellEnabled(spellID)
 end
 
-function IciclePlus:_SetSpellEnabled(info, spellID)
+function Atemi:_SetSpellEnabled(info, spellID)
 	if self:IsSpellEnabled(spellID) then
 		self:SetSpellEnabled(spellID, false)
 	else
@@ -721,25 +722,24 @@ function IciclePlus:_SetSpellEnabled(info, spellID)
 	end
 end
 
-function IciclePlus:GetTextColor()
+function Atemi:GetTextColor()
 	local color = self.db.profile.textColor
 	return color.red, color.green, color.blue
 end
 
-function IciclePlus:SetTextColor(info, r, g, b)
+function Atemi:SetTextColor(info, r, g, b)
 	local color = self.db.profile.textColor
 	color.red = r
 	color.green = g
 	color.blue = b
 end
--- }}}
 
-function IciclePlus:GetSpellListOfClass(className)
+function Atemi:GetSpellListOfClass(className)
 	local list = {}
 
-	if self.ClassCooldownMap[className] then
-		for i = 1, #self.ClassCooldownMap[className] do
-			local spellID = self.ClassCooldownMap[className][i]
+	if self.CLASS_COOLDOWN_MAP[className] then
+		for i = 1, #self.CLASS_COOLDOWN_MAP[className] do
+			local spellID = self.CLASS_COOLDOWN_MAP[className][i]
 			local name = GetSpellInfo(spellID)
 			list[spellID] = name
 		end
@@ -750,7 +750,7 @@ function IciclePlus:GetSpellListOfClass(className)
 	return list
 end
 
-function IciclePlus:SetSpellEnabled(spellID, enabled)
+function Atemi:SetSpellEnabled(spellID, enabled)
 	local spells = self.db.profile.spells
 	if enabled then
 		tinsert(spells, spellID)
@@ -765,44 +765,34 @@ function IciclePlus:SetSpellEnabled(spellID, enabled)
 		return false
 	end
 end
+-- }}}
 
--- tests whether or not the player has subscribed to that cooldown spell
-function IciclePlus:IsSpellEnabled(spellID)
-	local spells = self.db.profile.spells
-	for i = 1, #spells do
-		if spells[i] == spellID then
-			return true
-		end
-	end
-	return false
-end
+function Atemi:OnInitialize()
+	Atemi:Print("Atemi Enemy Cooldown Tracker")
+	Atemi:Print("Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
+	Atemi:Print("Use /atemi command to open configuration UI.")
 
-function IciclePlus:OnInitialize()
-	IciclePlus:Print("Initializing")
+	self.db = LibStub("AceDB-3.0"):New("AtemiDB", self.defaults)
 
-	self.db = LibStub("AceDB-3.0"):New("IciclePlusDB", self.defaults)
+	self:setupOptions()
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("Atemi", self.options)
+	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Atemi", "Atemi")
 
-	self:SetupOptions()
-	LibStub("AceConfig-3.0"):RegisterOptionsTable("IciclePlus", self.options)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("IciclePlus", "IciclePlus")
-
-	self:RegisterChatCommand("icicle", self.OpenConfig)
-	self:RegisterChatCommand("icicleplus", self.OpenConfig)
+	self:RegisterChatCommand("atemi", self.OpenConfig)
 
 	-- work vars
-	self.cooldownTimestamps = {}
-	self.cooldownTimers = {}
+	self.cooldowns = {}
 end
 
-function IciclePlus:OpenConfig()
-	LibStub("AceConfigDialog-3.0"):Open("IciclePlus")
+function Atemi:OpenConfig()
+	LibStub("AceConfigDialog-3.0"):Open("Atemi")
 end
 
-function IciclePlus:Debug(...)
---	self:Print("debug:", ...)
+function Atemi:Debug(...)
+	--self:Print("debug:", ...)
 end
 
-function IciclePlus:SetEnable(value)
+function Atemi:SetEnable(value)
 	if value then
 		self:Enable()
 	else
@@ -810,15 +800,15 @@ function IciclePlus:SetEnable(value)
 	end
 end
 
-function IciclePlus:OnEnable()
+function Atemi:OnEnable()
 	self:Debug("Enabling")
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
+	self.updateTimer = self:ScheduleRepeatingTimer("onTimerCallback", 1)
 end
 
-function IciclePlus:OnDisable()
+function Atemi:OnDisable()
 	self:Debug("Disabling")
 
 	if self.updateTimer then
@@ -828,11 +818,10 @@ function IciclePlus:OnDisable()
 
 	self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	wipe(self.cooldownTimestamps)
-	wipe(self.cooldownTimers)
+	wipe(self.cooldowns)
 end
 
-function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, _, auraType)
+function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, _, auraType)
 	-- skip things like nonames ;-)
 	if srcName == nil then
 		return
@@ -840,35 +829,30 @@ function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, src
 
 	local isHostile = bit.band(srcFlags, COMBATLOG_OBJECT_REACTION_HOSTILE) ~= 0
 	local isSpellCast = eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" or eventType == "SPELL_MISSED" or eventType == "SPELL_SUMMON"
-	local isCooldown = true -- self.CooldownDB[spellID] ~= nil
-	local isCooldownResetSpell = self.CooldownResetMap[spellID] ~= nil
+	local isCooldown = true -- self.SPELL_COOLDOWN_MAP[spellID] ~= nil
+	local isCooldownResetSpell = self.COOLDOWN_RESET_MAP[spellID] ~= nil
 
-	--self:Debug("spell(" .. spellName .. ") cooldown:" , (self.CooldownDB[spellID] ~= nil))
+	--self:Debug("spell(" .. spellName .. ") cooldown:" , (self.SPELL_COOLDOWN_MAP[spellID] ~= nil))
 
 	if isCooldown and isHostile and isSpellCast then
 		local timeNow = GetTime()
 		local playerName = strmatch(srcName, "[%P]+")
 
 		-- initialize player spell set, if this is the first time we see this player cast
-		if not self.cooldownTimers[playerName] then
-			self.cooldownTimers[playerName] = {}
-		end
-		if not self.cooldownTimestamps[playerName] then
-			self.cooldownTimestamps[playerName] = {}
+		if not self.cooldowns[playerName] then
+			self.cooldowns[playerName] = {}
 		end
 
 		if isCooldownResetSpell then
 			self:Debug("Received cooldown-reset spell: " .. spellName .. " by " .. srcName .. " (" .. eventType .. ")")
-			local playerCooldowns = self.cooldownTimers[playerName]
+			local playerCooldowns = self.cooldowns[playerName]
 			local i = 1
 			local c = 0
 			while i <= #playerCooldowns do
 				local cooldown = playerCooldowns[i]
-				if cooldown and self:IsResetableSpell(spellID, cooldown.spellID) then
-					self:Debug("- found resetable cooldown: " .. cooldown.name)
-					cooldown:Hide()
-					--cooldown:GetParent().icicle = 0
-					cooldown:SetParent(nil)
+				if cooldown and self:isResetableSpell(spellID, cooldown.spellID) then
+					self:Debug("- found resetable cooldown: " .. cooldown.spellName)
+					cooldown:hide()
 					tremove(playerCooldowns, i)
 					c = c + 1
 				else
@@ -878,18 +862,34 @@ function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, src
 			self:Debug("Wiped " .. tostring(c) .. " cooldowns of player " .. playerName)
 		end
 
+		-- add/set the timestamp this spell has been cast by this player, if subscribed to this spell
 		if self:IsSpellEnabled(spellID) then
 			self:Debug("Received spell: " .. spellName .. " by " .. srcName .. " (" .. eventType .. ")")
 
-			-- add/set the timestamp this spell has been cast by this player
-			if not self.cooldownTimestamps[playerName][spellName] or self.cooldownTimestamps[playerName][spellName] < timeNow then
-				self.cooldownTimestamps[playerName][spellName] = timeNow
-				self:SetupCooldownIcon(playerName, spellID, spellName)
+			local playerCooldowns = self.cooldowns[playerName]
+
+			-- remove possibly out-dated cooldown
+			local i = 1
+			while i <= #playerCooldowns do
+				local current = playerCooldowns[i]
+				if current ~= nil and current.spellID == spellID then
+					-- yes, we found an old one
+					self:Debug("hide old cd " .. current.spellName)
+					current:hide()
+					tremove(playerCooldowns, i)
+				else
+					i = i + 1
+				end
 			end
+
+			-- add cooldown to the list of player cooldowns
+			local duration = self:GetSpellCooldown(spellID)
+			local cooldown = AtemiCooldown:new(spellID, timeNow + duration, self.db.profile)
+			tinsert(playerCooldowns, cooldown)
 
 			-- install CollectNamePlates handler on demand
 			if not self.updateTimer then
-				self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
+				self.updateTimer = self:ScheduleRepeatingTimer("onTimerCallback", 1)
 			end
 		else
 			self:Debug("Ignore spell: " .. spellName .. " (" .. tostring(spellID) .. ") by " .. srcName .. " (" .. eventType .. ")")
@@ -897,8 +897,19 @@ function IciclePlus:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, src
 	end
 end
 
-function IciclePlus:IsResetableSpell(resetSpellID, testSpellID)
-	local spells = self.CooldownResetMap[resetSpellID]
+-- tests whether or not the player has subscribed to that cooldown spell
+function Atemi:IsSpellEnabled(spellID)
+	local spells = self.db.profile.spells
+	for i = 1, #spells do
+		if spells[i] == spellID then
+			return true
+		end
+	end
+	return false
+end
+
+function Atemi:isResetableSpell(resetSpellID, testSpellID)
+	local spells = self.COOLDOWN_RESET_MAP[resetSpellID]
 	if spells then
 		for i = 1, #spells do
 			if spells[i] == testSpellID then
@@ -909,109 +920,17 @@ function IciclePlus:IsResetableSpell(resetSpellID, testSpellID)
 	return false
 end
 
-function IciclePlus:SetupCooldownIcon(playerName, spellID, spellName)
-	if not self.cooldownTimers[playerName] then
-		-- this player blows his first cooldown (as we've seen it)
-		self.cooldownTimers[playerName] = {}
-	end
-
-	local _, _, texture = GetSpellInfo(spellID)
-	local cooldown = self:GetSpellCooldown(spellID)
-	local color = self.db.profile.textColor
-
-	--self:Debug("spell:", spellName, "has a CD of", cooldown, "seconds.")
-
-	local icon = CreateFrame("frame", nil, UIParent)
-
-	icon.endTime = GetTime() + cooldown
-	icon.spellID = spellID
-	icon.name = spellName
-
-	icon.texture = icon:CreateTexture(nil, "BORDER")
-	icon.texture:SetAllPoints(icon)
-	icon.texture:SetTexture(texture)
-
-	icon.cooldown = icon:CreateFontString(nil, "OVERLAY")
-	icon.cooldown:SetTextColor(color.red, color.green, color.blue)
-	icon.cooldown:SetAllPoints(icon)
-
-	local playerCooldowns = self.cooldownTimers[playerName]
-	local isInterruptSpell = false -- TODO
-
-	if isInterruptSpell then
-		-- TODO highlight icon, as this is a more important one
-		local border = icon:CreateTexture(nil, "OVERLAY")
-		border:SetTexture("Interface\\Addons\\IciclePlus\\Border.tga")
-		border:SetVertexColor(1.0, 0.35, 0.0)
-		border:SetAllPoints(icon)
-	end
-
-	-- remove possible out-dated cooldown
-	for i = 1, #playerCooldowns do
-		if playerCooldowns[i] and playerCooldowns[i].spellID == spellID then
-			-- yes, we found an old one
-			local cooldown = playerCooldowns[i]
-
-			if cooldown:IsVisible() then
-				local frame = cooldown:GetParent()
-				if frame.icicle then
-					frame.icicle = 0
-				end
-				cooldown:Hide()
-				cooldown:SetParent(nil)
-				tremove(playerCooldowns, i)
-			end
-		end
-	end
-
-	-- add cooldown icon to the list of player cooldowns
-	tinsert(playerCooldowns, icon)
-
-	icon:SetScript("OnUpdate", function()
-		self:IconTimer(icon)
-	end)
-end
-
-function IciclePlus:IconTimer(icon)
-	local itimer = round(icon.endTime - GetTime())
-
-	icon.cooldown:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
-
-	if itimer >= 60 then
-		icon.cooldown:SetText(round(itimer / 60) .. "m")
-	elseif itimer < 60 and itimer >= 1 then
-		icon.cooldown:SetText(ceil(itimer))
-	else
-		icon.cooldown:SetText(" ")
-		icon:SetScript("OnUpdate", nil)
-	end
-end
-
-function IciclePlus:HideCooldowns(playerName, namePlateFrame)
-	local playerCooldowns = self.cooldownTimers[playerName]
-
-	namePlateFrame.icicle = 0
-
-	for i = 1, #playerCooldowns do
-		playerCooldowns[i]:Hide()
-		playerCooldowns[i]:SetParent(nil)
-	end
-
-	-- unregister self
-	namePlateFrame:SetScript("OnHide", nil)
-end
-
-function IciclePlus:GetSpellCooldown(spellID)
-	local result = self.CooldownDB[spellID]
+function Atemi:GetSpellCooldown(spellID)
+	local result = self.SPELL_COOLDOWN_MAP[spellID]
 	if result then
 		return result
 	else
-		return 75 
+		return 0
 	end
 end
 
-function IciclePlus:OnTimerCallback(elapsed)
-	self:PurgeExpiredCooldowns()
+function Atemi:onTimerCallback(elapsed)
+	self:purgeExpiredCooldowns()
 
 	local numChildren = WorldFrame:GetNumChildren()
 	for i = 1, numChildren do
@@ -1024,23 +943,23 @@ function IciclePlus:OnTimerCallback(elapsed)
 			plateName = plateName:GetText()
 			--self:Debug("frameName:", frameName, "plateName:", plateName)
 
-			local playerCooldowns = self.cooldownTimers[plateName]
+			local playerCooldowns = self.cooldowns[plateName]
 			if playerCooldowns ~= nil then
-				-- reparent & show icons
-				for i = 1, #playerCooldowns do
-					playerCooldowns[i]:SetParent(frame)
-					playerCooldowns[i]:Show()
-				end
-
-				-- add icons to nameplate
 				if not self.plateWidth then
 					-- we cache this value
 					self.plateWidth = frame:GetWidth()
 				end
 
+				-- reparent (& show) icons, if not yet done so
+				for i = 1, #playerCooldowns do
+					playerCooldowns[i]:bindToNameplate(frame)
+				end
+
+				-- resize and/or reposition cooldown icons
 				local numCooldowns = #playerCooldowns
 
-				if numCooldowns * self.db.profile.iconSize + (numCooldowns * 2 - 2) > self.plateWidth then
+				if numCooldowns * self.db.profile.iconSize +
+						(numCooldowns * 2 - 2) > self.plateWidth then
 					self.size = (self.plateWidth - (numCooldowns * 2 - 2)) / numCooldowns
 				else
 					self.size = self.db.profile.iconSize
@@ -1049,45 +968,48 @@ function IciclePlus:OnTimerCallback(elapsed)
 				--self:Debug("size:" .. self.size .. ", iconSize:" .. self.db.profile.iconSize .. ", fontSize:" .. self.db.profile.fontSize .. ", numCDs:" .. numCooldowns)
 
 				for i = 1, #playerCooldowns do
-					-- self:Debug("Draw player cooldown: '" .. playerCooldowns[i].name .. "'" .. " with size " .. self.size)
-					playerCooldowns[i]:ClearAllPoints()
-					playerCooldowns[i]:SetWidth(self.db.profile.iconSize)
-					playerCooldowns[i]:SetHeight(self.db.profile.iconSize)
-					playerCooldowns[i].cooldown:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
+					-- self:Debug("Draw player cooldown: '" .. playerCooldowns[i].spellName .. "'" .. " with size " .. self.size)
+					playerCooldowns[i]:setSize(self.db.profile.iconSize)
+					playerCooldowns[i].iconText:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
 
 					if i == 1 then
-						playerCooldowns[i]:SetPoint("TOPLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset)
+						playerCooldowns[i].icon:SetPoint("TOPLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset)
 					else
-						playerCooldowns[i]:SetPoint("TOPLEFT", playerCooldowns[i - 1], self.db.profile.iconSize + self.db.profile.gapSize, 0)
+						playerCooldowns[i].icon:SetPoint("TOPLEFT", playerCooldowns[i - 1].icon, self.db.profile.iconSize + self.db.profile.gapSize, 0)
 					end
 				end
 
 				-- install icon-hide handler
 				frame:SetScript("OnHide", function()
-					self:HideCooldowns(plateName, frame)
+					self:Debug("Nameplate.OnHide")
+					local playerCooldowns = self.cooldowns[playerName]
+					if playerCooldowns then
+						while #playerCooldowns do
+							playerCooldowns[1]:hide()
+							tremove(playerCooldowns, 1)
+						end
+						--wipe(playerCooldowns)
+					end
+					frame:SetScript("OnHide", nil)
 				end)
 			end
 		end
 	end
 end
 
-function IciclePlus:PurgeExpiredCooldowns()
+function Atemi:purgeExpiredCooldowns()
 	local timeNow = GetTime()
 
-	for playerName, playerCooldowns in pairs(self.cooldownTimers) do
-		for i, c in ipairs(playerCooldowns) do
-			local isExpired = c.endTime < timeNow
-			if isExpired then
-				if c:IsVisible() then
-					local nameplate = c:GetParent()
-					if nameplate.icicle then
-						nameplate.icicle = 0
-					end
-				end
-
-				c:Hide()
-				c:SetParent(nil)
+	for playerName, playerCooldowns in pairs(self.cooldowns) do
+		local i = 1
+		while i <= #playerCooldowns do
+			local cooldown = playerCooldowns[i]
+			if cooldown:isExpiredBy(timeNow) then
+				self:Debug("cd expired.")
+				cooldown:hide()
 				tremove(playerCooldowns, i)
+			else
+				i = i + 1
 			end
 		end
 	end

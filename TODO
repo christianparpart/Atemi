@@ -5,6 +5,17 @@ IciclePlus Todo List:
 * UI: auto-adjust cooldown icon list if they exceed the width of its parent frame (nameplate)
 	* make this optional by configuration
 * configuration: add profile-support
+* UI: alert on spell use (e.g. coldsnap)
+	- announceUse = bool (default: false)
+* UI: alert on cooldown expirey (e.g. when Counterspell is (about to be) ready again)
+	- announceReady = bool (default: true)
+	- announceReadyShift = SECONDS (number of secs ahead of spell availability, default: 3)
+
+announce text:
+	- "$SPELL_ICON $SPELL_NAME used by $ENEMY"
+	- "$SPELL_ICON $SPELL_NAME @ $ENEMY is ready in $TIME s"
+	- show icon, name, or icon and name.
+	- announcing shall be configurable per spell independantly
 
 LONGTERM TODO TODO:
 -------------------

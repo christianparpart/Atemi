@@ -1,13 +1,14 @@
 ## Interface: 40100
-## Title: IciclePlus
-## Notes: The improved Icicle addon
+## Title: Atemi
+## Notes: Flexible Enemy Cooldown Tracking
 ## Version: 0.1.0
 ## Author: Christian Parpart
-## SavedVariables: IciclePlusDB
-## X-Website: http://github.com/trapni/icicleplus
+## SavedVariables: AtemiDB
+## X-Website: http://github.com/trapni/Atemi
 ## X-Category: Arena
 ## X-License: GPL version 3
 
 embeds.xml
 
-IciclePlus.lua
+AtemiCooldown.lua
+Atemi.lua
