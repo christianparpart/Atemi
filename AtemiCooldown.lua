@@ -4,8 +4,10 @@
 @description   holds up a spell with a cooldown duration properties and the UI elements to show this cooldown
 
 public function API:
-	void bindToNameplate(nameplate);
-	void hide();
+	void BindToNameplate(nameplate);
+	void SetIconCoords(anchorRef, anchor, x, y, size);
+	void Hide();
+	bool IsExpiredBy(time);
 
 public properties:
 	int spellID;
@@ -16,7 +18,7 @@ public properties:
 example use:
 	local cd = AtemiCooldown(spellID, spellCooldown + timeNow, self.db.profile)
 	-- once you know the player's nameplate, bind the cooldown to show it atop
-	cd.bindToNameplate(someNameplate)
+	cd.BindToNameplate(someNameplate)
 ]]
 
 AtemiCooldown = {}
@@ -28,6 +30,12 @@ local function round(value)
 end
 -- }}}
 
+-- creates a new cooldown for the given spell.
+--
+-- @param spellID    the spell ID of the spell to create the cooldown for
+-- @param endTime    an absolute time when the cooldown is to expire
+-- @param db         a pointer to the configuration to read color codes (etc) from
+--
 function AtemiCooldown:new(spellID, endTime, db)
 	local self = {}
 	setmetatable(self, AtemiCooldown)
@@ -45,14 +53,13 @@ function AtemiCooldown:new(spellID, endTime, db)
 	return self
 end
 
-function AtemiCooldown:bindToNameplate(nameplate)
+-- binds this cooldown to a specific nameplate (UI frame), if not yet done so, and shows the cooldowns UI elements atop of it.
+--
+-- @param nameplate the nameplate UI element this cooldown belongs to.
+--
+function AtemiCooldown:BindToNameplate(nameplate)
 	Atemi:Debug("Bind Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
-	if self.nameplate then
-		self.nameplate:SetScript("OnHide", nil)
-	end
-
 	self.nameplate = nameplate
-	self.nameplate:SetScript("OnHide", function() self:hide() end)
 
 	if not self.icon then
 		self.icon = CreateFrame("Frame", nil, UIParent)
@@ -77,12 +84,27 @@ function AtemiCooldown:bindToNameplate(nameplate)
 	end
 end
 
-function AtemiCooldown:setSize(value)
+-- repositions the cooldown icon relative to an anchor UI element's x & y and resizes it to the given size.
+--
+-- @param anchorRef TOPLEFT, etc.
+-- @param anchor    the frame to reposition the icon relative to
+-- @param x         the X-coordinate or offset, relative to the anchor
+-- @param y         the Y-coordinate or offset, relative to the anchor
+-- @param size      the extents (width & height) of the icon
+--
+-- FIXME should we resize the icon text accordingly, too? would require an additional parameter.
+--
+function AtemiCooldown:SetIconCoords(anchorRef, anchor, x, y, size)
 	self.icon:ClearAllPoints()
-	self.icon:SetWidth(value)
-	self.icon:SetHeight(value)
+	self.icon:SetPoint(anchorRef, anchor, x, y)
+	self.icon:SetWidth(size)
+	self.icon:SetHeight(size)
 end
 
+-- redraws the icon (text).
+--
+-- @internal
+--
 function AtemiCooldown:onIconUpdate()
 	local itimer = round(self.endTime - GetTime())
 
@@ -91,11 +113,15 @@ function AtemiCooldown:onIconUpdate()
 	elseif itimer < 60 and itimer >= 1 then
 		self.iconText:SetText(ceil(itimer))
 	else
-		self:hide()
+		self:Hide()
 	end
 end
 
-function AtemiCooldown:hide()
+-- hides the UI element(s) of this cooldown.
+--
+-- You must BindToNameplate() in order to show the icon again.
+--
+function AtemiCooldown:Hide()
 	Atemi:Debug("Hide Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
 	if self.icon then
 		self.icon:Hide()
@@ -107,6 +133,8 @@ function AtemiCooldown:hide()
 	end
 end
 
-function AtemiCooldown:isExpiredBy(time)
+-- tests whether or not the cooldown has expired (faded out) already.
+--
+function AtemiCooldown:IsExpiredBy(time)
 	return round(self.endTime - time) <= 0
 end

@@ -768,9 +768,9 @@ end
 -- }}}
 
 function Atemi:OnInitialize()
-	Atemi:Print("Atemi Enemy Cooldown Tracker")
-	Atemi:Print("Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
-	Atemi:Print("Use /atemi command to open configuration UI.")
+	Atemi:Print("|cffff6600" .. "Atemi Enemy Cooldown Tracker")
+	Atemi:Print("|cffffaa42" .. "Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
+	Atemi:Print("|cffffaa42" .. "Use /atemi command to open configuration UI.")
 
 	self.db = LibStub("AceDB-3.0"):New("AtemiDB", self.defaults)
 
@@ -805,7 +805,7 @@ function Atemi:OnEnable()
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	self.updateTimer = self:ScheduleRepeatingTimer("onTimerCallback", 1)
+	self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
 end
 
 function Atemi:OnDisable()
@@ -850,9 +850,9 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID,
 			local c = 0
 			while i <= #playerCooldowns do
 				local cooldown = playerCooldowns[i]
-				if cooldown and self:isResetableSpell(spellID, cooldown.spellID) then
+				if cooldown and self:IsResetableSpell(spellID, cooldown.spellID) then
 					self:Debug("- found resetable cooldown: " .. cooldown.spellName)
-					cooldown:hide()
+					cooldown:Hide()
 					tremove(playerCooldowns, i)
 					c = c + 1
 				else
@@ -874,9 +874,11 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID,
 				local current = playerCooldowns[i]
 				if current ~= nil and current.spellID == spellID then
 					-- yes, we found an old one
-					self:Debug("hide old cd " .. current.spellName)
-					current:hide()
+					self:Debug("remove old " .. current.spellName)
+					current:Hide()
 					tremove(playerCooldowns, i)
+					-- a spell can be only listed once per player, so break out
+					break
 				else
 					i = i + 1
 				end
@@ -889,7 +891,7 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID,
 
 			-- install CollectNamePlates handler on demand
 			if not self.updateTimer then
-				self.updateTimer = self:ScheduleRepeatingTimer("onTimerCallback", 1)
+				self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
 			end
 		else
 			self:Debug("Ignore spell: " .. spellName .. " (" .. tostring(spellID) .. ") by " .. srcName .. " (" .. eventType .. ")")
@@ -908,7 +910,7 @@ function Atemi:IsSpellEnabled(spellID)
 	return false
 end
 
-function Atemi:isResetableSpell(resetSpellID, testSpellID)
+function Atemi:IsResetableSpell(resetSpellID, testSpellID)
 	local spells = self.COOLDOWN_RESET_MAP[resetSpellID]
 	if spells then
 		for i = 1, #spells do
@@ -929,8 +931,8 @@ function Atemi:GetSpellCooldown(spellID)
 	end
 end
 
-function Atemi:onTimerCallback(elapsed)
-	self:purgeExpiredCooldowns()
+function Atemi:OnTimerCallback(elapsed)
+	self:PurgeExpiredCooldowns()
 
 	local numChildren = WorldFrame:GetNumChildren()
 	for i = 1, numChildren do
@@ -939,20 +941,15 @@ function Atemi:onTimerCallback(elapsed)
 		local isNamePlate = frameName and frameName:find("NamePlate")
 
 		if isNamePlate and frame:IsVisible() then
-			local _, _, _, plateName = frame:GetRegions()
-			plateName = plateName:GetText()
-			--self:Debug("frameName:", frameName, "plateName:", plateName)
+			local _, _, _, playerName = frame:GetRegions()
+			playerName = playerName:GetText()
+			--self:Debug("frameName:", frameName, "playerName:", playerName)
 
-			local playerCooldowns = self.cooldowns[plateName]
+			local playerCooldowns = self.cooldowns[playerName]
 			if playerCooldowns ~= nil then
 				if not self.plateWidth then
 					-- we cache this value
 					self.plateWidth = frame:GetWidth()
-				end
-
-				-- reparent (& show) icons, if not yet done so
-				for i = 1, #playerCooldowns do
-					playerCooldowns[i]:bindToNameplate(frame)
 				end
 
 				-- resize and/or reposition cooldown icons
@@ -967,28 +964,29 @@ function Atemi:onTimerCallback(elapsed)
 				self.db.profile.fontSize = ceil(self.size - self.size / 2)
 				--self:Debug("size:" .. self.size .. ", iconSize:" .. self.db.profile.iconSize .. ", fontSize:" .. self.db.profile.fontSize .. ", numCDs:" .. numCooldowns)
 
-				for i = 1, #playerCooldowns do
-					-- self:Debug("Draw player cooldown: '" .. playerCooldowns[i].spellName .. "'" .. " with size " .. self.size)
-					playerCooldowns[i]:setSize(self.db.profile.iconSize)
-					playerCooldowns[i].iconText:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
+				-- reparent (& show) (& relocate) icons, if not yet done so
+				for i, cooldown in ipairs(playerCooldowns) do
+					-- self:Debug("Draw player cooldown: '" .. cooldown.spellName .. "'" .. " with size " .. self.size)
+					cooldown:BindToNameplate(frame)
+
+					cooldown.iconText:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
 
 					if i == 1 then
-						playerCooldowns[i].icon:SetPoint("TOPLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset)
+						cooldown:SetIconCoords("TOPLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset, self.db.profile.iconSize)
 					else
-						playerCooldowns[i].icon:SetPoint("TOPLEFT", playerCooldowns[i - 1].icon, self.db.profile.iconSize + self.db.profile.gapSize, 0)
+						cooldown:SetIconCoords("TOPLEFT",   playerCooldowns[i - 1].icon, self.db.profile.iconSize + self.db.profile.gapSize, 0, self.db.profile.iconSize)
 					end
 				end
 
 				-- install icon-hide handler
 				frame:SetScript("OnHide", function()
-					self:Debug("Nameplate.OnHide")
+					self:Debug("Nameplate.OnHide(" .. playerName .. ")")
 					local playerCooldowns = self.cooldowns[playerName]
 					if playerCooldowns then
-						while #playerCooldowns do
-							playerCooldowns[1]:hide()
-							tremove(playerCooldowns, 1)
+						for _, cooldown in ipairs(playerCooldowns) do
+							self:Debug("hide cd " .. cooldown.spellName)
+							cooldown:Hide()
 						end
-						--wipe(playerCooldowns)
 					end
 					frame:SetScript("OnHide", nil)
 				end)
@@ -997,16 +995,16 @@ function Atemi:onTimerCallback(elapsed)
 	end
 end
 
-function Atemi:purgeExpiredCooldowns()
+function Atemi:PurgeExpiredCooldowns()
 	local timeNow = GetTime()
 
 	for playerName, playerCooldowns in pairs(self.cooldowns) do
 		local i = 1
 		while i <= #playerCooldowns do
 			local cooldown = playerCooldowns[i]
-			if cooldown:isExpiredBy(timeNow) then
-				self:Debug("cd expired.")
-				cooldown:hide()
+			if cooldown:IsExpiredBy(timeNow) then
+				self:Debug(cooldown.spellName .. ": expired")
+				cooldown:Hide()
 				tremove(playerCooldowns, i)
 			else
 				i = i + 1
