@@ -821,7 +821,16 @@ function Atemi:OnDisable()
 	wipe(self.cooldowns)
 end
 
-function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, hideCaster, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, _, auraType)
+-- function Atemi:COMBAT_LOG_EVENT_UNFILTERED(_, _, eventType, _, srcGUID, srcName, srcFlags, _, dstGUID, dstName, dstFlags, _, spellID, spellName, _, auraType)
+function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
+	-- support WoW 4.1 and 4.2 simultanously
+	local eventType, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, auraType
+	if tonumber((select(4, GetBuildInfo()))) >= 40200 then
+		_, _, eventType, _, srcGUID, srcName, srcFlags, _, dstGUID, dstName, dstFlags, _, spellID, spellName, _, auraType = ...
+	else
+		_, _, eventType, _, srcGUID, srcName, srcFlags, dstGUID, dstName, dstFlags, spellID, spellName, _, auraType = ...
+	end
+
 	-- skip things like nonames ;-)
 	if srcName == nil then
 		return
