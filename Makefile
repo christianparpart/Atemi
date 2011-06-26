@@ -14,7 +14,7 @@ dist:
 
 copy:
 	@echo "Installing into ${PREFIX} ..."
-	rm -rf "${PREFIX}"
+	rm -rf "${PREFIX}"/*
 	mkdir -p "${PREFIX}"
 	cp -rp * "${PREFIX}"
 
