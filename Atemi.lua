@@ -518,7 +518,7 @@ Atemi.defaults = { -- {{{
 		iconSize = 22,      -- size in pixel of each cooldown icon
 		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
 		fontSize = ceil(22 - 22 / 2),
-		fontPath = "Interface\\AddOns\\Atemi\\Hooge0655.ttf",
+		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
 		spells = {
 			44572, -- Deep Freeze
