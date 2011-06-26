@@ -285,7 +285,6 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[85388] = 45,				--"Throwdown",
 	[100] = 13,					--"Charge",
 	[6552] = 10,				--"Pummel",
-	[72] = 12,					--"Shield Bash",
 	[23920] = 20,				--"Spell Reflection",
 	[2565] = 30,				--"Shield Block",
 	[676] = 60,					--"Disarm",
@@ -447,7 +446,6 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		85388,  -- Throwdown
 		100,    -- Charge
 		6552,   -- Pummel
-		72,     -- Shield Bash
 		23920,  -- Spell Reflection
 		676,    -- Disarm
 		5246,   -- Intimidation Shout
