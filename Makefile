@@ -1,10 +1,14 @@
 
-VERSION=0.1.0-r1
+VERSION=0.1.0-r2
 PREFIX=${HOME}/World of Warcraft/Interface/AddOns/Atemi
 
+FILES=embeds.xml Atemi.lua Atemi.toc AtemiCooldown.lua FreeUniversal-Regular.ttf README TODO
+
 dist:
+	rm -rf Atemi
 	mkdir -p Atemi
-	cp -rvp libs *.lua *.toc README TODO *.ttf embeds.xml Atemi
+	cp -rvp ${FILES} Atemi/
+	cp -rvp libs Atemi/
 	zip -9 Atemi-${VERSION}.zip -r Atemi
 	rm -rf Atemi
 
