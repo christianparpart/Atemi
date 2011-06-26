@@ -81,6 +81,17 @@ function AtemiCooldown:BindToNameplate(nameplate)
 		self.icon:SetScript("OnUpdate", function()
 			self:onIconUpdate()
 		end)
+
+		if self.db.showTooltips then
+			self.icon:SetScript("OnEnter", function()
+				GameTooltip:ClearLines()
+				GameTooltip:AddSpellByID(self.spellID)
+				GameTooltip:Show()
+			end)
+			self.icon:SetScript("OnLeave", function()
+				GameTooltip:FadeOut()
+			end)
+		end
 	end
 end
 
@@ -126,6 +137,8 @@ function AtemiCooldown:Hide()
 	if self.icon then
 		self.icon:Hide()
 		self.icon:SetScript("OnUpdate", nil)
+		self.icon:SetScript("OnEnter", nil)
+		self.icon:SetScript("OnLeave", nil)
 		self.icon:SetParent(nil)
 
 		self.icon = nil

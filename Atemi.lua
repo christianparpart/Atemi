@@ -517,6 +517,7 @@ Atemi.defaults = { -- {{{
 		gapSize = 2,        -- gap in pixel between the cooldown icons
 		iconSize = 22,      -- size in pixel of each cooldown icon
 		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
+		showTooltips = true,-- show spell tooltips when hovering the icon atop their nameplates
 		fontSize = ceil(22 - 22 / 2),
 		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
@@ -554,14 +555,28 @@ function Atemi:setupOptions()
 						type = 'color',
 						name = 'cooldown text color',
 						desc = 'The color the text should be drawn in',
+						order = 1,
 						hasAlpha = false,
 						get = 'GetTextColor',
 						set = 'SetTextColor',
+					},
+					showTooltips = {
+						type = 'toggle',
+						name = 'Show spell tooltips',
+						desc = 'Shows tooltips of their spells when hovering the cooldown icon atop of a nameplate',
+						order = 2,
+						get = function()
+							return Atemi.db.profile.showTooltips
+						end,
+						set = function(info, value)
+							Atemi.db.profile.showTooltips = value
+						end
 					},
 					gapSize = {
 						type = 'range',
 						name = 'Icon gap size',
 						desc = 'gap in pixels between the cooldown icons',
+						order = 3,
 						min = 0,
 						max = 64,
 						step = 1,
@@ -576,6 +591,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'Icon size',
 						desc = 'size of the cooldown icons in pixels',
+						order = 4,
 						min = 16,
 						max = 128,
 						step = 1,
@@ -590,6 +606,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'font size',
 						desc = 'size of the cooldown text in pixels inside the cooldown icon',
+						order = 5,
 						min = 6,
 						max = 128,
 						step = 1,
@@ -604,6 +621,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'X-offset',
 						desc = 'icon offset to the X-axis relative to its nameplate parent',
+						order = 6,
 						min = -64,
 						max = 64,
 						step = 1,
@@ -618,6 +636,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'Y-offset',
 						desc = 'icon offset to the Y-axis relative to its nameplate parent',
+						order = 7,
 						min = -64,
 						max = 64,
 						step = 1,
