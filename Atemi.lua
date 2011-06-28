@@ -6,6 +6,15 @@
 
 Atemi = LibStub("AceAddon-3.0"):NewAddon("Atemi", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
 
+local L = LibStub("AceLocale-3.0"):GetLocale("Atemi", true)
+
+--[[if not L then
+	L = {}
+	setmetatable(L, { __index = function(t, k)
+		return k
+	end})
+end]]
+
 -- {{{ some helpers
 local function SetContains(set, value)
 	for i = 1, #set do
@@ -727,30 +736,30 @@ function Atemi:setupOptions()
 		args = {
 			enable = {
 				type = 'toggle',
-				name = 'Enable',
-				desc = 'Enables / disables this AddOn',
+				name = L['Enable'],
+				desc = L['Enables / disables this AddOn'],
 				order = 1,
 				set = function(info, value) Atemi:SetEnable(value) end,
 				get = function(info) return Atemi:IsEnabled() end
 			},
 			general = {
 				type = 'group',
-				name = 'General',
-				desc = 'General Settings',
+				name = L['General'],
+				desc = L['General Settings'],
 				order = 2,
 				args = {
 					greeter = {
 						type = 'toggle',
-						name = 'Show greeter on load',
-						desc = 'Shows the addon greeting text in the main chat window when loading this addon.',
+						name = L['Show greeter on load'],
+						desc = L['Shows the addon greeting text in the main chat window when loading this addon.'],
 						order = 1,
 						get = function(info, value) return self.db.profile.showGreeter end,
 						set = function(info, value) self.db.profile.showGreeter = value end
 					},
 					textColor = {
 						type = 'color',
-						name = 'cooldown text color',
-						desc = 'The color the text should be drawn in',
+						name = L['cooldown text color'],
+						desc = L['The color the text should be drawn in'],
 						order = 2,
 						hasAlpha = false,
 						get = 'GetTextColor',
@@ -758,8 +767,8 @@ function Atemi:setupOptions()
 					},
 					showTooltips = {
 						type = 'toggle',
-						name = 'Show spell tooltips',
-						desc = 'Shows tooltips of their spells when hovering the cooldown icon atop of a nameplate',
+						name = L['Show spell tooltips'],
+						desc = L['Shows tooltips of their spells when hovering the cooldown icon atop of a nameplate'],
 						order = 3,
 						get = function()
 							return Atemi.db.profile.showTooltips
@@ -770,8 +779,8 @@ function Atemi:setupOptions()
 					},
 					gapSize = {
 						type = 'range',
-						name = 'Icon gap size',
-						desc = 'gap in pixels between the cooldown icons',
+						name = L['Icon gap size'],
+						desc = L['gap in pixels between the cooldown icons'],
 						order = 4,
 						min = 0,
 						max = 64,
@@ -785,8 +794,8 @@ function Atemi:setupOptions()
 					},
 					iconSize = {
 						type = 'range',
-						name = 'Icon size',
-						desc = 'size of the cooldown icons in pixels',
+						name = L['Icon size'],
+						desc = L['size of the cooldown icons in pixels'],
 						order = 5,
 						min = 16,
 						max = 128,
@@ -800,8 +809,8 @@ function Atemi:setupOptions()
 					},
 					fontSize = {
 						type = 'range',
-						name = 'font size',
-						desc = 'size of the cooldown text in pixels inside the cooldown icon',
+						name = L['font size'],
+						desc = L['size of the cooldown text in pixels inside the cooldown icon'],
 						order = 6,
 						min = 6,
 						max = 128,
@@ -815,8 +824,8 @@ function Atemi:setupOptions()
 					},
 					xOffset = {
 						type = 'range',
-						name = 'X-offset',
-						desc = 'icon offset to the X-axis relative to its nameplate parent',
+						name = L['X-offset'],
+						desc = L['icon offset to the X-axis relative to its nameplate parent'],
 						order = 7,
 						min = -64,
 						max = 64,
@@ -830,8 +839,8 @@ function Atemi:setupOptions()
 					},
 					yOffset = {
 						type = 'range',
-						name = 'Y-offset',
-						desc = 'icon offset to the Y-axis relative to its nameplate parent',
+						name = L['Y-offset'],
+						desc = L['icon offset to the Y-axis relative to its nameplate parent'],
 						order = 8,
 						min = -64,
 						max = 64,
@@ -846,75 +855,74 @@ function Atemi:setupOptions()
 				}
 			},
 			cooldowns = {
-				name = 'Cooldowns',
+				name = L['Cooldowns'],
 				type = 'group',
 				get = '_GetSpellEnabled',
 				set = '_SetWantNameplateIcon',
 				args = {
 					rogue = {
 						type = 'group',
-						name = 'Rogue',
-						desc = 'Rogue cooldowns',
+						name = L['Rogue'],
 						order = 1,
 						args = self:GetClassOptions("Rogue")
 					},
 					mage = {
 						type = 'group',
-						name = "Mage",
+						name = L["Mage"],
 						order = 2,
 						args = self:GetClassOptions("Mage")
 					},
 					priest = {
 						type = 'group',
-						name = "Priest",
+						name = L["Priest"],
 						order = 3,
 						args = self:GetClassOptions("Priest")
 					},
 					hunter = {
 						type = 'group',
-						name = "Hunter",
+						name = L["Hunter"],
 						order = 4,
 						args = self:GetClassOptions("Hunter")
 					},
 					druid = {
 						type = 'group',
-						name = "Druid",
+						name = L["Druid"],
 						order = 5,
 						args = self:GetClassOptions("Druid")
 					},
 					shaman = {
 						type = 'group',
-						name = "Shaman",
+						name = L["Shaman"],
 						order = 6,
 						args = self:GetClassOptions("Shaman")
 					},
 					warlock = {
 						type = 'group',
-						name = "Warlock",
+						name = L["Warlock"],
 						order = 7,
 						args = self:GetClassOptions("Warlock")
 					},
 					deathknight = {
 						type = 'group',
-						name = "Death Knight",
+						name = L["Death Knight"],
 						order = 8,
 						args = self:GetClassOptions("DeathKnight")
 					},
 					warrior = {
 						type = 'group',
-						name = "Warrior",
+						name = L["Warrior"],
 						order = 9,
 						args = self:GetClassOptions("Warrior")
 					},
 					paladin = {
 						type = 'group',
-						name = "Paladin",
+						name = L["Paladin"],
 						order = 10,
 						args = self:GetClassOptions("Paladin")
 					},
 					misc = {
 						type = 'group',
-						name = "Racials / Miscellaneous",
+						name = L["Racials / Miscellaneous"],
 						order = 11,
 						args = self:GetClassOptions("misc")
 					}
@@ -1079,7 +1087,7 @@ function Atemi:OnInitialize()
 	if self.db.profile.showGreeter then
 		Atemi:Print("|cffff6600" .. "Atemi Enemy Cooldown Tracker")
 		Atemi:Print("|cffffaa42" .. "Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
-		Atemi:Print("|cffffaa42" .. "Use /atemi command to open configuration UI.")
+		Atemi:Print("|cffffaa42" .. L["Use /atemi command to open configuration UI."])
 	end
 
 	self:setupOptions()
@@ -1109,16 +1117,12 @@ function Atemi:SetEnable(value)
 end
 
 function Atemi:OnEnable()
-	self:Debug("Enabling")
-
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 	self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
 end
 
 function Atemi:OnDisable()
-	self:Debug("Disabling")
-
 	if self.updateTimer then
 		self:CancelTimer(self.updateTimer)
 		self.updateTimer = nil

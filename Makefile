@@ -8,6 +8,7 @@ dist:
 	rm -rf Atemi
 	mkdir -p Atemi
 	cp -rvp ${FILES} Atemi/
+	cp -rvp locale Atemi/
 	cp -rvp libs Atemi/
 	zip -9 Atemi-${VERSION}.zip -r Atemi
 	rm -rf Atemi

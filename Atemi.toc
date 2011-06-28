@@ -10,5 +10,8 @@
 
 embeds.xml
 
+locale\enUS.lua
+locale\deDE.lua
+
 AtemiCooldown.lua
 Atemi.lua
