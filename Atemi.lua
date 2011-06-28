@@ -6,6 +6,60 @@
 
 Atemi = LibStub("AceAddon-3.0"):NewAddon("Atemi", "AceConsole-3.0", "AceEvent-3.0", "AceTimer-3.0")
 
+-- {{{ some helpers
+local function SetContains(set, value)
+	for i = 1, #set do
+		if set[i] == value then
+			return true
+		end
+	end
+	return false
+end
+
+local function SetEnable(set, value, enable)
+	for i = 1, #set do
+		if set[i] == value then
+			tremove(set, i)
+			break
+		end
+	end
+
+	if enable then
+		tinsert(set, value)
+	end
+end
+
+-- @fn getSpellDescription(spellID)
+-- @desc retrieves the description of a spell by given ID
+--
+-- @copyright BigWigs AddOn developer
+--
+local getSpellDescription
+do
+	local cache = {}
+	local scanner = CreateFrame("GameTooltip")
+	scanner:SetOwner(WorldFrame, "ANCHOR_NONE")
+	local lcache, rcache = {}, {}
+	for i = 1, 4 do
+		lcache[i], rcache[i] = scanner:CreateFontString(), scanner:CreateFontString()
+		lcache[i]:SetFontObject(GameFontNormal); rcache[i]:SetFontObject(GameFontNormal)
+		scanner:AddFontStrings(lcache[i], rcache[i])
+	end
+	function getSpellDescription(spellId)
+		if cache[spellId] then return cache[spellId] end
+		scanner:ClearLines()
+		scanner:SetHyperlink("spell:"..spellId)
+		for i = scanner:NumLines(), 1, -1  do
+			local desc = lcache[i] and lcache[i]:GetText()
+			if desc then
+				cache[spellId] = desc
+				return desc
+			end
+		end
+	end
+end
+-- }}}
+
 Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	--------------------------------------------------------------------------
 	--Misc
@@ -365,7 +419,6 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		82726,  -- Fervor
 		3045,   -- Rapid Fire
 		19386,  -- Wyvern Sting
-		53351,  -- Kill Shot
 		53271,  -- Master's Call (bound to pet)
 		51753,  -- Camouflage
 		19263,  -- Deterrence
@@ -400,7 +453,7 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		29166,  -- Innervate
 	},
 	["Shaman"] = {
-		98008,  --"Spirit Link Totem
+		98008,  -- Spirit Link Totem
 		8177,   -- Grounding Totem
 		57994,  -- Wind Shear
 		51533,  -- Feral Spirit
@@ -510,6 +563,7 @@ Atemi.COOLDOWN_RESET_MAP = {
 
 Atemi.defaults = { -- {{{
 	profile = {
+		showGreeter = true,
 		xOffset = 0,
 		yOffset = 22,
 		gapSize = 2,        -- gap in pixel between the cooldown icons
@@ -519,10 +573,146 @@ Atemi.defaults = { -- {{{
 		fontSize = ceil(22 - 22 / 2),
 		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
+		announceUsed = {},  -- list of spells to announce on use
+		announceReady = {}, -- list of spells to announce on ready again
+		announceReadyTime = 5, -- time in seconds to announce before it becomes ready again
 		spells = {
-			44572, -- Deep Freeze
-			82676, -- Ring of Frost
-			19503, -- Scatter Shot
+			-- Rogue
+			2094,   -- Blind
+			1766,   -- Kick
+			2983,   -- Sprint
+			14185,  -- Preparation
+			31224,  -- Cloak of Shadows
+			1856,   -- Vanish
+			36554,  -- Shadowstep
+			5277,   -- Evasion
+			408,    -- Kidney Shot
+			51722,  -- Dismantle
+			76577,  -- Smoke Bomb
+			51690,  -- Killing Spree
+			51713,  -- Shadow Dance
+			-- Mage
+			2139,   -- Counterspell
+			44572,  -- Deep Freeze
+			11958,  -- Cold Snap
+			45438,  -- Ice Block
+			12042,  -- Arcane Power
+			12051,  -- Evocation
+			120,    -- Cone of Cold
+			122,    -- Frost Nova
+			11426,  -- Ice Barrier
+			12472,  -- Icy Veins
+			82731,  -- Flame Orb
+			55342,  -- Mirror Image
+			66,     -- Invisibility
+			1953,   -- Blink
+			82676,  -- Ring of Frost
+			12043,  -- Presence of Mind
+			31661,  -- Dragon's Breath
+			-- Mage Pet: Water Elemental
+			33395,  -- Freeze
+			-- Priest
+			89485,     -- Inner Focus
+			64044,     -- Psychic Horror
+			8122,      -- Psychic Scream
+			15487,     -- Silence
+			47585,     -- Dispersion
+			33206,     -- Pain Suppression
+			88625,     -- Holy Word: Chastise
+			586,       -- Fade
+			64901,     -- Hymn of Hope
+			64843,     -- Devine Hymn
+			19236,     -- Desperate Prayer
+			62618,     -- Power Word: Barrier
+			-- Hunter
+			82726,  -- Fervor
+			3045,   -- Rapid Fire
+			53271,  -- Master's Call (bound to pet)
+			51753,  -- Camouflage
+			19263,  -- Deterrence
+			19503,  -- Scatter Shot
+			23989,  -- Readiness
+			34490,  -- Silencing Shot
+			1499,   -- Freezing Trap
+			13809,  -- Ice Trap
+			-- Druid
+			22812,  -- Barkskin
+			17116,  -- Nature's Swiftness
+			33891,  -- Tree of Life
+			16979,  -- Feral Charge - Bear
+			49376,  -- Feral Charge - Cat
+			61336,  -- Survival Instincts
+			50334,  -- Berserk
+			22570,  -- Maim
+			18562,  -- Swiftmend
+			5211,   -- Bash
+			22842,  -- Frenzied Regeneration
+			16689,  -- Nature's Grasp
+			740,    -- Tranquility
+			80964,  -- Skull Bash
+			80965,  -- Skull Bash
+			29166,  -- Innervate
+			-- Shaman
+			98008,  -- Spirit Link Totem
+			8177,   -- Grounding Totem
+			57994,  -- Wind Shear
+			51533,  -- Feral Spirit
+			16190,  -- Mana Tide Totem
+			30823,  -- Shamanistic Rage
+			2484,   -- Earthbind Totem,
+			8143,   -- Tremor Totem, patch 4.0.6
+			51514,  -- Hex
+			79206,  -- Spiritwalker's Grace
+			16166,  -- Elemental Mastery
+			16188,  -- Nature's Swiftness
+			-- Warlock
+			6789,   -- Death Coil
+			5484,   -- Howl of Terror
+			48020,  -- Demonic Circle: Teleport
+			-- Warlock Pets
+			19647,  -- Spell Lock
+			7812,   -- Sacrifice
+			89766,  -- Axe Toss
+			89751,  -- Felstorm
+			-- Paladin
+			1044,   -- Hand of Freedom
+			853,    -- Hammer of Justice
+			1022,   -- Hand of Protection
+			498,    -- Divine Protection
+			54428,  -- Divine Plea
+			6940,   -- Hand of Sacrifice
+			86150,  -- Guardian of Ancient Kings
+			31842,  -- Divine Favor
+			31821,  -- Aura Mastery
+			70940,  -- Divine Guardian
+			20066,  -- Repentance
+			-- Warrior
+			86346,  -- Colossus Smash
+			85388,  -- Throwdown
+			100,    -- Charge
+			6552,   -- Pummel
+			23920,  -- Spell Reflection
+			676,    -- Disarm
+			5246,   -- Intimidation Shout
+			871,    -- Shield Wall
+			20252,  -- Intercept
+			3411,   -- Intervene
+			64382,  -- Shattering Blow
+			12975,  -- Last Stand
+			46924,  -- Blade Storm
+			-- Death Knight
+			49039,  -- Lichborne
+			47476,  -- Strangulate
+			48707,  -- Anti-Magic Shell
+			49576,  -- Death Grip
+			47528,  -- Mind Freeze
+			51271,  -- Pillar of Frost
+			51052,  -- Anti-Magic Zone
+			49203,  -- Hungering Cold
+			48792,  -- Icebound Fortitute
+			-- misc
+			58984,  -- Shadowmeld (Nightelf racial)
+			69070,  -- Goblin: Rocket Jump
 		}
 	}
 } -- }}}
@@ -549,11 +739,19 @@ function Atemi:setupOptions()
 				desc = 'General Settings',
 				order = 2,
 				args = {
+					greeter = {
+						type = 'toggle',
+						name = 'Show greeter on load',
+						desc = 'Shows the addon greeting text in the main chat window when loading this addon.',
+						order = 1,
+						get = function(info, value) return self.db.profile.showGreeter end,
+						set = function(info, value) self.db.profile.showGreeter = value end
+					},
 					textColor = {
 						type = 'color',
 						name = 'cooldown text color',
 						desc = 'The color the text should be drawn in',
-						order = 1,
+						order = 2,
 						hasAlpha = false,
 						get = 'GetTextColor',
 						set = 'SetTextColor',
@@ -562,7 +760,7 @@ function Atemi:setupOptions()
 						type = 'toggle',
 						name = 'Show spell tooltips',
 						desc = 'Shows tooltips of their spells when hovering the cooldown icon atop of a nameplate',
-						order = 2,
+						order = 3,
 						get = function()
 							return Atemi.db.profile.showTooltips
 						end,
@@ -574,7 +772,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'Icon gap size',
 						desc = 'gap in pixels between the cooldown icons',
-						order = 3,
+						order = 4,
 						min = 0,
 						max = 64,
 						step = 1,
@@ -589,7 +787,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'Icon size',
 						desc = 'size of the cooldown icons in pixels',
-						order = 4,
+						order = 5,
 						min = 16,
 						max = 128,
 						step = 1,
@@ -604,7 +802,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'font size',
 						desc = 'size of the cooldown text in pixels inside the cooldown icon',
-						order = 5,
+						order = 6,
 						min = 6,
 						max = 128,
 						step = 1,
@@ -619,7 +817,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'X-offset',
 						desc = 'icon offset to the X-axis relative to its nameplate parent',
-						order = 6,
+						order = 7,
 						min = -64,
 						max = 64,
 						step = 1,
@@ -634,7 +832,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = 'Y-offset',
 						desc = 'icon offset to the Y-axis relative to its nameplate parent',
-						order = 7,
+						order = 8,
 						min = -64,
 						max = 64,
 						step = 1,
@@ -648,94 +846,93 @@ function Atemi:setupOptions()
 				}
 			},
 			cooldowns = {
-				type = 'group',
 				name = 'Cooldowns',
-				desc = 'Cooldowns to watch out for',
-				order = 3,
+				type = 'group',
 				get = '_GetSpellEnabled',
-				set = '_SetSpellEnabled',
+				set = '_SetWantNameplateIcon',
 				args = {
 					rogue = {
-						type = 'multiselect',
-						name = "Rogoue Spells",
+						type = 'group',
+						name = 'Rogue',
+						desc = 'Rogue cooldowns',
 						order = 1,
-						values = self:GetSpellListOfClass("Rogue")
+						args = self:GetClassOptions("Rogue")
 					},
 					mage = {
-						type = 'multiselect',
-						name = "Mage Spells",
+						type = 'group',
+						name = "Mage",
 						order = 2,
-						values = self:GetSpellListOfClass("Mage")
+						args = self:GetClassOptions("Mage")
 					},
 					priest = {
-						type = 'multiselect',
-						name = "Priest Spells",
+						type = 'group',
+						name = "Priest",
 						order = 3,
-						values = self:GetSpellListOfClass("Priest")
+						args = self:GetClassOptions("Priest")
 					},
 					hunter = {
-						type = 'multiselect',
-						name = "Hunter Spells",
+						type = 'group',
+						name = "Hunter",
 						order = 4,
-						values = self:GetSpellListOfClass("Hunter")
+						args = self:GetClassOptions("Hunter")
 					},
 					druid = {
-						type = 'multiselect',
-						name = "Druid Spells",
+						type = 'group',
+						name = "Druid",
 						order = 5,
-						values = self:GetSpellListOfClass("Druid")
+						args = self:GetClassOptions("Druid")
 					},
 					shaman = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Shaman",
 						order = 6,
-						values = self:GetSpellListOfClass("Shaman")
+						args = self:GetClassOptions("Shaman")
 					},
 					warlock = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Warlock",
 						order = 7,
-						values = self:GetSpellListOfClass("Warlock")
+						args = self:GetClassOptions("Warlock")
 					},
 					deathknight = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Death Knight",
 						order = 8,
-						values = self:GetSpellListOfClass("DeathKnight")
+						args = self:GetClassOptions("DeathKnight")
 					},
 					warrior = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Warrior",
 						order = 9,
-						values = self:GetSpellListOfClass("Warrior")
+						args = self:GetClassOptions("Warrior")
 					},
 					paladin = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Paladin",
 						order = 10,
-						values = self:GetSpellListOfClass("Paladin")
+						args = self:GetClassOptions("Paladin")
 					},
 					misc = {
-						type = 'multiselect',
+						type = 'group',
 						name = "Racials / Miscellaneous",
 						order = 11,
-						values = self:GetSpellListOfClass("misc")
+						args = self:GetClassOptions("misc")
 					}
 				}
 			}
-		},
+		}
 	}
 end
 
 function Atemi:_GetSpellEnabled(info, spellID)
-	return self:IsSpellEnabled(spellID)
+	return self:WantNameplateIcon(spellID)
 end
 
-function Atemi:_SetSpellEnabled(info, spellID)
-	if self:IsSpellEnabled(spellID) then
-		self:SetSpellEnabled(spellID, false)
+function Atemi:_SetWantNameplateIcon(info, spellID)
+	if self:WantNameplateIcon(spellID) then
+		self:SetWantNameplateIcon(spellID, false)
 	else
-		self:SetSpellEnabled(spellID, true)
+		self:SetWantNameplateIcon(spellID, true)
 	end
 end
 
@@ -749,6 +946,86 @@ function Atemi:SetTextColor(info, r, g, b)
 	color.red = r
 	color.green = g
 	color.blue = b
+end
+
+function Atemi:GetSpellDescription(spellID)
+	local s = getSpellDescription(spellID)
+	if s then
+		return s
+	else
+		return "SpellID: " .. tostring(spellID)
+	end
+end
+
+function Atemi:GetClassOptions(className)
+	local list = {}
+
+	if self.CLASS_COOLDOWN_MAP[className] then
+		for i = 1, #self.CLASS_COOLDOWN_MAP[className] do
+			local spellID = self.CLASS_COOLDOWN_MAP[className][i]
+			local spellName, _, spellIcon = GetSpellInfo(spellID)
+
+			if spellName ~= nil then
+				local namePrefix = "|Hspell:" .. spellID .. "|h|T" .. tostring(spellIcon) .. ":0|t "
+				local namePostfix = "|h"
+
+				list[tostring(spellID)] = {
+					type = 'group',
+					name = namePrefix .. spellName .. namePostfix,
+					desc = spellName,
+					order = i,
+					inline = true,
+					args = {
+						desc = {
+							type = 'description',
+							name = function()
+								return self:GetSpellDescription(spellID)
+							end,
+							order = 0
+						},
+						iconOnNameplate = {
+							type = 'toggle',
+							name = 'icon on nameplate',
+							desc = 'shows an icon with the cooldown timer atop the nameplate',
+							icon = spellIcon,
+							iconCoords = {0, 1, 0, 1},
+							order = 1,
+							get = function(info, value) return self:WantNameplateIcon(spellID) end,
+							set = function(info, value)
+								if self:WantNameplateIcon(spellID) then
+									self:SetWantNameplateIcon(spellID, false)
+								else
+									self:SetWantNameplateIcon(spellID, true)
+								end
+							end
+						},
+						--[[
+						announceOnUse = {
+							type = 'toggle',
+							name = 'announce on use',
+							desc = 'Announces on the screen, that this spell has just been used by given player',
+							order = 2,
+							get = function() return self:WantAnnounceUsed(spellID) end,
+							set = function(info, value) self:SetWantAnnounceUsed(spellID, value) end
+						},
+						announceBeforeReady = {
+							type = 'toggle',
+							name = 'announce on ready',
+							desc = 'announces to the screen, that this spell is about to become ready in N seconds for given player',
+							order = 3,
+							get = function() return self:WantAnnounceReady(spellID) end,
+							set = function(info, value) self:SetWantAnnounceReady(spellID, value) end
+						}
+						]]
+					}
+				}
+			else
+				self:Print(className .. ": error loading spell " .. spellID .. " as it seems to not exist (anymore).")
+			end
+		end
+	end
+
+	return list
 end
 
 function Atemi:GetSpellListOfClass(className)
@@ -767,29 +1044,43 @@ function Atemi:GetSpellListOfClass(className)
 	return list
 end
 
-function Atemi:SetSpellEnabled(spellID, enabled)
-	local spells = self.db.profile.spells
-	if enabled then
-		tinsert(spells, spellID)
-		return true
-	else
-		for i = 1, #spells do
-			if spells[i] == spellID then
-				tremove(spells, i)
-				return true
-			end
-		end
-		return false
-	end
+-- property: announce on use
+function Atemi:WantAnnounceUsed(spellID)
+	return SetContains(self.db.profile.announceUsed, spellID)
+end
+
+function Atemi:SetWantAnnounceUsed(spellID, enabled)
+	self:Print("want announce used: " .. spellID .. " " .. tostring(enabled))
+	return SetEnable(self.db.profile.announceUsed, spellID, enabled)
+end
+
+-- property: announce on ready
+function Atemi:WantAnnounceReady(spellID)
+	return SetContains(self.db.profile.announceReady, spellID)
+end
+
+function Atemi:SetWantAnnounceReady(spellID, enabled)
+	return SetEnable(self.db.profile.announceReady, spellID, enabled)
+end
+
+-- tests whether or not the player has subscribed to that cooldown spell
+function Atemi:WantNameplateIcon(spellID)
+	return SetContains(self.db.profile.spells, spellID)
+end
+
+function Atemi:SetWantNameplateIcon(spellID, enabled)
+	return SetEnable(self.db.profile.spells, spellID, enabled)
 end
 -- }}}
 
 function Atemi:OnInitialize()
-	Atemi:Print("|cffff6600" .. "Atemi Enemy Cooldown Tracker")
-	Atemi:Print("|cffffaa42" .. "Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
-	Atemi:Print("|cffffaa42" .. "Use /atemi command to open configuration UI.")
-
 	self.db = LibStub("AceDB-3.0"):New("AtemiDB", self.defaults)
+
+	if self.db.profile.showGreeter then
+		Atemi:Print("|cffff6600" .. "Atemi Enemy Cooldown Tracker")
+		Atemi:Print("|cffffaa42" .. "Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
+		Atemi:Print("|cffffaa42" .. "Use /atemi command to open configuration UI.")
+	end
 
 	self:setupOptions()
 	LibStub("AceConfig-3.0"):RegisterOptionsTable("Atemi", self.options)
@@ -889,7 +1180,8 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
 		end
 
 		-- add/set the timestamp this spell has been cast by this player, if subscribed to this spell
-		if self:IsSpellEnabled(spellID) then
+		local duration = self:GetSpellCooldown(spellID)
+		if duration then
 			self:Debug("Received spell: " .. spellName .. " by " .. srcName .. " (" .. eventType .. ")")
 
 			local playerCooldowns = self.cooldowns[playerName]
@@ -911,11 +1203,10 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
 			end
 
 			-- add cooldown to the list of player cooldowns
-			local duration = self:GetSpellCooldown(spellID)
 			local cooldown = AtemiCooldown:new(spellID, timeNow + duration, self.db.profile)
 			tinsert(playerCooldowns, cooldown)
 
-			-- install CollectNamePlates handler on demand
+			-- install timer handler on demand
 			if not self.updateTimer then
 				self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
 			end
@@ -923,17 +1214,6 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
 			self:Debug("Ignore spell: " .. spellName .. " (" .. tostring(spellID) .. ") by " .. srcName .. " (" .. eventType .. ")")
 		end
 	end
-end
-
--- tests whether or not the player has subscribed to that cooldown spell
-function Atemi:IsSpellEnabled(spellID)
-	local spells = self.db.profile.spells
-	for i = 1, #spells do
-		if spells[i] == spellID then
-			return true
-		end
-	end
-	return false
 end
 
 function Atemi:IsResetableSpell(resetSpellID, testSpellID)
@@ -990,8 +1270,16 @@ function Atemi:OnTimerCallback(elapsed)
 				self.db.profile.fontSize = ceil(self.size - self.size / 2)
 				--self:Debug("size:" .. self.size .. ", iconSize:" .. self.db.profile.iconSize .. ", fontSize:" .. self.db.profile.fontSize .. ", numCDs:" .. numCooldowns)
 
-				-- reparent (& show) (& relocate) icons, if not yet done so
+				-- collect cooldowns we want icons for
+				iconsWanted = {}
 				for i, cooldown in ipairs(playerCooldowns) do
+					if self:WantNameplateIcon(cooldown.spellID) then
+						tinsert(iconsWanted, cooldown)
+					end
+				end
+
+				-- reparent (& show) (& relocate) icons, if not yet done so
+				for i, cooldown in ipairs(iconsWanted) do
 					-- self:Debug("Draw player cooldown: '" .. cooldown.spellName .. "'" .. " with size " .. self.size)
 					cooldown:BindToNameplate(frame)
 
