@@ -38,3 +38,6 @@ L['Paladin'] = true
 L['Racials / Miscellaneous'] = true
 
 L["Use /atemi command to open configuration UI."] = true
+
+L['icon on nameplate'] = true
+L['shows an icon with the cooldown timer atop the nameplate'] = true

@@ -38,3 +38,6 @@ L['Paladin'] = "Paladin"
 L['Racials / Miscellaneous'] = "Rassenfähigkeiten / Sonstiges"
 
 L["Use /atemi command to open configuration UI."] = "Benutze zum Konfigurieren des Atemi-Addons den Befehl /atemi"
+
+L['icon on nameplate'] = "auf Namensplakette"
+L['shows an icon with the cooldown timer atop the nameplate'] = "Zeigt ein Symbol mit den aktuellen Cooldown über der Namensplakette des Spielers"

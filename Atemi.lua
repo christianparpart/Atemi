@@ -993,8 +993,8 @@ function Atemi:GetClassOptions(className)
 						},
 						iconOnNameplate = {
 							type = 'toggle',
-							name = 'icon on nameplate',
-							desc = 'shows an icon with the cooldown timer atop the nameplate',
+							name = L['icon on nameplate'],
+							desc = L['shows an icon with the cooldown timer atop the nameplate'],
 							icon = spellIcon,
 							iconCoords = {0, 1, 0, 1},
 							order = 1,
