@@ -1,9 +1,17 @@
-IciclePlus Todo List:
---------------------
+Atemi Todo List:
+----------------
+
+.: 0.3 :.
 
 * UI: auto-adjust cooldown icon list if they exceed the width of its parent frame (nameplate)
 	* make this optional by configuration
+
+.: 0.4 :.
+
 * configuration: add profile-support
+
+.: 0.5 :.
+
 * UI: alert on spell use (e.g. coldsnap)
 	- announceUse = bool (default: false)
 * UI: alert on cooldown expirey (e.g. when Counterspell is (about to be) ready again)
