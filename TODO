@@ -1,16 +1,13 @@
 IciclePlus Todo List:
 --------------------
 
-* make greeter-message on initialization phase optional
-  (config checkbox to disable this greeter, enabled by default)
-* localization: for at least 'en' and 'de'
 * UI: auto-adjust cooldown icon list if they exceed the width of its parent frame (nameplate)
 	* make this optional by configuration
 * configuration: add profile-support
 * UI: alert on spell use (e.g. coldsnap)
 	- announceUse = bool (default: false)
 * UI: alert on cooldown expirey (e.g. when Counterspell is (about to be) ready again)
-	- announceReady = bool (default: true)
+	- announceReady = bool (default: false)
 	- announceReadyShift = SECONDS (number of secs ahead of spell availability, default: 3)
 
 announce text:
