@@ -12,6 +12,7 @@ embeds.xml
 
 locale\enUS.lua
 locale\deDE.lua
+locale\koKR.lua
 
 AtemiCooldown.lua
 Atemi.lua
