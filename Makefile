@@ -1,5 +1,5 @@
 
-VERSION=0.2.1
+VERSION=0.3.0
 PREFIX=${HOME}/World of Warcraft/Interface/AddOns/Atemi
 
 FILES=embeds.xml Atemi.lua Atemi.toc AtemiCooldown.lua FreeUniversal-Regular.ttf README TODO
