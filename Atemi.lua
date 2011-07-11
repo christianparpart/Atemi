@@ -579,7 +579,8 @@ Atemi.defaults = { -- {{{
 		iconSize = 22,      -- size in pixel of each cooldown icon
 		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
 		showTooltips = true,-- show spell tooltips when hovering the icon atop their nameplates
-		fontSize = ceil(22 - 22 / 2),
+		autoAdjustSizes = false, -- automatically adjust icon/font sizes relative to their nameplate width
+		fontSize = ceil(22 * 0.75),
 		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
 		announceUsed = {},  -- list of spells to announce on use
@@ -775,6 +776,18 @@ function Atemi:setupOptions()
 						end,
 						set = function(info, value)
 							Atemi.db.profile.showTooltips = value
+						end
+					},
+					autoAdjustSizes = {
+						type = 'toggle',
+						name = L['Resize icons/fonts'],
+						desc = L['Automatically adjust icon/font-sizes relative to their nameplate width (if they would exceed).'],
+						order = 3,
+						get = function()
+							return Atemi.db.profile.autoAdjustSizes
+						end,
+						set = function(info, value)
+							Atemi.db.profile.autoAdjustSizes = value
 						end
 					},
 					gapSize = {
@@ -1105,7 +1118,7 @@ function Atemi:OpenConfig()
 end
 
 function Atemi:Debug(...)
-	--self:Print("debug:", ...)
+--	self:Print("debug:", ...)
 end
 
 function Atemi:SetEnable(value)
@@ -1210,9 +1223,9 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
 			local cooldown = AtemiCooldown:new(spellID, timeNow + duration, self.db.profile)
 			tinsert(playerCooldowns, cooldown)
 
-			-- install timer handler on demand
+			-- install timer handler on demand (to update UI on every .333 seconds)
 			if not self.updateTimer then
-				self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 1)
+				self.updateTimer = self:ScheduleRepeatingTimer("OnTimerCallback", 0.333)
 			end
 		else
 			self:Debug("Ignore spell: " .. spellName .. " (" .. tostring(spellID) .. ") by " .. srcName .. " (" .. eventType .. ")")
@@ -1262,18 +1275,6 @@ function Atemi:OnTimerCallback(elapsed)
 					self.plateWidth = frame:GetWidth()
 				end
 
-				-- resize and/or reposition cooldown icons
-				local numCooldowns = #playerCooldowns
-
-				if numCooldowns * self.db.profile.iconSize +
-						(numCooldowns * 2 - 2) > self.plateWidth then
-					self.size = (self.plateWidth - (numCooldowns * 2 - 2)) / numCooldowns
-				else
-					self.size = self.db.profile.iconSize
-				end
-				self.db.profile.fontSize = ceil(self.size - self.size / 2)
-				--self:Debug("size:" .. self.size .. ", iconSize:" .. self.db.profile.iconSize .. ", fontSize:" .. self.db.profile.fontSize .. ", numCDs:" .. numCooldowns)
-
 				-- collect cooldowns we want icons for
 				iconsWanted = {}
 				for i, cooldown in ipairs(playerCooldowns) do
@@ -1282,17 +1283,35 @@ function Atemi:OnTimerCallback(elapsed)
 					end
 				end
 
+				-- resize and/or reposition cooldown icons
+				local numCooldowns = #iconsWanted
+				local iconSize, fontSize
+
+				if self.db.profile.autoAdjustSizes and
+					numCooldowns * self.db.profile.iconSize + (numCooldowns * 2 - 2) > self.plateWidth
+				then
+					iconSize = (self.plateWidth - (numCooldowns * 2 - 2)) / numCooldowns
+					fontSize = ceil(iconSize * .5) -- FIXME we could do better (honor the user's pref relative to the resizing)
+
+					self:Debug("fontSize: " .. fontSize .. "/" .. self.db.profile.fontSize .. ", " ..
+							   "iconSize: " .. iconSize .. "/" .. self.db.profile.iconSize .. ", " ..
+							   "numCools: " .. numCooldowns)
+				else
+					iconSize = self.db.profile.iconSize
+					fontSize = self.db.profile.fontSize
+				end
+
 				-- reparent (& show) (& relocate) icons, if not yet done so
 				for i, cooldown in ipairs(iconsWanted) do
 					-- self:Debug("Draw player cooldown: '" .. cooldown.spellName .. "'" .. " with size " .. self.size)
 					cooldown:BindToNameplate(frame)
 
-					cooldown.iconText:SetFont(self.db.profile.fontPath, self.db.profile.fontSize, "OUTLINE")
+					cooldown.iconText:SetFont(self.db.profile.fontPath, fontSize, "OUTLINE")
 
 					if i == 1 then
-						cooldown:SetIconCoords("TOPLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset, self.db.profile.iconSize)
+						cooldown:SetIconCoords("BOTTOMLEFT", frame, self.db.profile.xOffset, self.db.profile.yOffset, iconSize)
 					else
-						cooldown:SetIconCoords("TOPLEFT",   playerCooldowns[i - 1].icon, self.db.profile.iconSize + self.db.profile.gapSize, 0, self.db.profile.iconSize)
+						cooldown:SetIconCoords("BOTTOMLEFT", playerCooldowns[i - 1].icon, iconSize + self.db.profile.gapSize, 0, iconSize)
 					end
 				end
 
