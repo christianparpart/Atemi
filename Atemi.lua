@@ -251,10 +251,10 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	--------------------------------------------------------------------------
 	--Paladin
 	[1044] = 25,				--"Hand of Freedom",
+	[96231] = 10,				--"Rebuke",
 	[31884] = 120,				--"Avenging Wrath",
 	[853] = 50,					--"Hammer of Justice",
 	[31935] = 15,				--"Avenger's Shield",
-	[96231] = 10,				--"Rebuke",
 	[633] = 420,				--"Lay on Hands",
 	[1022] = 180,				--"Hand of Protection",
 	[498] = 40,					--"Divine Protection",
@@ -491,6 +491,7 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 	},
 	["Paladin"] = {
 		1044,   -- Hand of Freedom
+		96231,  -- Rebuke,
 		853,    -- Hammer of Justice
 		1022,   -- Hand of Protection
 		498,    -- Divine Protection
@@ -686,6 +687,7 @@ Atemi.defaults = { -- {{{
 			89751,  -- Felstorm
 			-- Paladin
 			1044,   -- Hand of Freedom
+			96231,  -- Rebuke
 			853,    -- Hammer of Justice
 			1022,   -- Hand of Protection
 			498,    -- Divine Protection
