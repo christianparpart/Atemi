@@ -201,27 +201,48 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Druid
-	[22812] = 60,				--"Barkskin",
-	[17116] = 180,				--"Nature's Swiftness",
-	[33891] = 180,				--"Tree of Life",
-	[16979] = 14,				--"Feral Charge - Bear",
-	[49376] = 28,				--"Feral Charge - Cat",
-	[61336] = 180,				--"Survival Instincts",
-	[50334] = 180,				--"Berserk",
-	[50516] = 17,				--"Typhoon",
-	[33831] = 180,				--"Force of Nature",
-	[22570] = 10,				--"Maim",
-	[18562] = 15,				--"Swiftmend",
-	[48505] = 60,				--"Starfall",
-	[78675] = 60,				--"Solar Beam",
-	[5211] = 50,				--"Bash",
-	[22842] = 180,				--"Frenzied Regeneration",
-	[16689] = 60, 				--"Nature's Grasp",
-	[740] = 480,				--"Tranquility",
-	[80964] = 10,				--"Skull Bash",
-	[80965] = 10,				--"Skull Bash",
-	[78674] = 15,				--"Starsurge",
-	[29166] = 180,				--"Innervate",
+	-- abilities
+	[102543] = 180,				-- Incarnation: King of the Jungle
+	[102558] = 180,				-- Incarnation: Son of Ursoc
+	[339] = 30,					-- Entangling Roots
+	[102560] = 180,				-- Incarnation: Chosen of Elune
+	[1850] = 180,				-- Dash
+	[22812] = 60,				-- Barkskin
+	[16689] = 60,				-- Nature's Grasp
+	[29116] = 180,				-- Innervate
+	[22842] = 90,				-- Frenzied Regeneration
+	[106922] = 180,				-- Might of Ursoc
+	[740] = 480,				-- Tranquility
+	[77761] = 120,				-- Stampeding Roar
+
+	-- talents
+	[102280] = 30,				-- Displacer Beast
+	[102401] = 15,				-- Wild Charge
+	[102351] = 30,				-- Cenarion Ward
+	[132158] = 60,				-- Nature's Swiftness
+	[108238] = 120,				-- Renewal
+	[102359] = 120,				-- Mass Entanglement
+	[132469] = 20,				-- Typhoon
+	[106737] = 60,				-- Force of Nature
+	[106731] = 180,				-- Incarnation
+	[99] = 30,					-- Disorienting Roar
+	[5211] = 50,				-- Mighty Bash
+	[102793] = 60,				-- Ursol's Vortex
+	[108288] = 360,				-- Heart of the Wild
+	[124974] = 300,				-- Nature's Vigil
+
+	-- specialization
+	[102795] = 60,				-- Bear Hug
+	[106952] = 180,				-- Berserk
+	[112071] = 180,				-- Celestial Alignment
+	[102342] = 120,				-- Ironbark
+	[88432] = 8,				-- Nature's Cure
+	[2782] = 8,					-- Remove Corruption
+	[106839] = 15,				-- Skull Bash
+	[78675] = 60,				-- Solar Beam
+	[48505] = 90,				-- Starfall
+	[78674] = 15,				-- Starsurge
+	[61336] = 180,				-- Survival Instincts
 
 	--------------------------------------------------------------------------
 	--Hunter
@@ -483,27 +504,48 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		13809,  -- Ice Trap
 	},
 	["Druid"] = {
+		-- abilities
+		102543, -- Incarnation: King of the Jungle
+		102558, -- Incarnation: Son of Ursoc
+		339,    -- Entangling Roots
+		102560, -- Incarnation: Chosen of Elune
+		1850,   -- Dash
 		22812,  -- Barkskin
-		17116,  -- Nature's Swiftness
-		33891,  -- Tree of Life
-		16979,  -- Feral Charge - Bear
-		49376,  -- Feral Charge - Cat
-		61336,  -- Survival Instincts
-		50334,  -- Berserk
-		50516,  -- Typhoon
-		33831,  -- Force of Nature
-		22570,  -- Maim
-		18562,  -- Swiftmend
-		48505,  -- Starfall
-		78675,  -- Solar Beam
-		5211,   -- Bash
-		22842,  -- Frenzied Regeneration
 		16689,  -- Nature's Grasp
+		29116,  -- Innervate
+		22842,  -- Frenzied Regeneration
+		106922, -- Might of Ursoc
 		740,    -- Tranquility
-		80964,  -- Skull Bash
-		80965,  -- Skull Bash
+		77761,  -- Stampeding Roar
+
+		-- talents
+		102280, -- Displacer Beast
+		102401, -- Wild Charge
+		102351, -- Cenarion Ward
+		132158, -- Nature's Swiftness
+		108238, -- Renewal
+		102359, -- Mass Entanglement
+		132469, -- Typhoon
+		106737, -- Force of Nature
+		106731, -- Incarnation
+		99,     -- Disorienting Roar
+		5211,   -- Mighty Bash
+		102793, -- Ursol's Vortex
+		108288, -- Heart of the Wild
+		124974, -- Nature's Vigil
+
+		-- specialization
+		102795, -- Bear Hug
+		106952, -- Berserk
+		112071, -- Celestial Alignment
+		102342, -- Ironbark
+		88432,  -- Nature's Cure
+		2782,   -- Remove Corruption
+		106839, -- Skull Bash
+		78675,  -- Solar Beam
+		48505,  -- Starfall
 		78674,  -- Starsurge
-		29166,  -- Innervate
+		61336,  -- Survival Instincts
 	},
 	["Shaman"] = {
 		98008,  -- Spirit Link Totem
