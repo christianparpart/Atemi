@@ -888,39 +888,44 @@ Atemi.defaults = { -- {{{
 		announceReadyTime = 5, -- time in seconds to announce before it becomes ready again
 		spells = {
 			-- Rogue
-			2094,   -- Blind
-			1766,   -- Kick
-			2983,   -- Sprint
-			14185,  -- Preparation
-			31224,  -- Cloak of Shadows
-			1856,   -- Vanish
-			36554,  -- Shadowstep
-			5277,   -- Evasion
-			408,    -- Kidney Shot
-			51722,  -- Dismantle
-			76577,  -- Smoke Bomb
-			51690,  -- Killing Spree
-			51713,  -- Shadow Dance
+			1766, -- Kick
+			1776, -- Gauge
+			1856, -- Vanish
+			2094, -- Blind
+			2983, -- Sprint
+			5277, -- Evasion
+			31224, -- Cloak of Shadows
+			51722, -- Dismantle
+			76577, -- Smoke Bomb
+			114018, -- Shroud of Concealment
+			114842, -- Shadow Walk
+			121471, -- Shadow Blades
+			14185, -- Preparation, (sprint, vanish, cloak, evasion, dismantle)
+			31230, -- Cheat Death
+			36554, -- Shadowstep
+			74001, -- Combat Readiness
+			13750, -- Adrenaline Rush
+			51690, -- Killing Spree
+			51713, -- Shadow Dance
+			79140, -- Vendetta
 			-- Mage
-			2139,   -- Counterspell
-			44572,  -- Deep Freeze
-			11958,  -- Cold Snap
-			45438,  -- Ice Block
-			12042,  -- Arcane Power
-			12051,  -- Evocation
-			120,    -- Cone of Cold
-			122,    -- Frost Nova
-			11426,  -- Ice Barrier
-			12472,  -- Icy Veins
-			82731,  -- Flame Orb
-			55342,  -- Mirror Image
-			66,     -- Invisibility
-			1953,   -- Blink
-			82676,  -- Ring of Frost
-			12043,  -- Presence of Mind
-			31661,  -- Dragon's Breath
-			-- Mage Pet: Water Elemental
 			33395,  -- Freeze
+			1953, -- Blink
+			122, -- Frost Nova
+			2139, -- Counterspell
+			45438, -- Ice Block
+			12051, -- Evocation
+			66, -- Invisibility
+			44572, -- Deep Freeze
+			12043, -- Presence of Mind
+			102051, -- Frostjaw
+			113724, -- Ring of Frost
+			86949, -- Cautarize
+			11958, -- Cold Snap
+			110959, -- Greater Invisibility
+			12042, -- Arcane Power
+			31687, -- Summon Water Elemental
+			31661, -- Dragon's Breath
 			-- Priest
 			8122, -- Psychic Scream
 			34433, -- Shadowfiend
@@ -944,33 +949,38 @@ Atemi.defaults = { -- {{{
 			64044, -- Psychic Horror
 			15487, -- Silence
 			-- Hunter
-			82726,  -- Fervor
-			3045,   -- Rapid Fire
-			53271,  -- Master's Call (bound to pet)
-			51753,  -- Camouflage
-			19263,  -- Deterrence
-			19503,  -- Scatter Shot
-			23989,  -- Readiness
-			34490,  -- Silencing Shot
-			1499,   -- Freezing Trap
-			13809,  -- Ice Trap
+			781, -- Disengage
+			19503, -- Scatter Shot
+			1499, -- Freezing Trap
+			13809, -- Ice Trap
+			3045, -- Rapid Fire
+			23989, -- Readiness
+			34600, -- Snake Trap
+			53271, -- Master's Call
+			19263, -- Deterrence
+			34490, -- Silencing Shot
+			19386, -- Wyvern Sting
 			-- Druid
+			1850,   -- Dash
 			22812,  -- Barkskin
-			17116,  -- Nature's Swiftness
-			33891,  -- Tree of Life
-			16979,  -- Feral Charge - Bear
-			49376,  -- Feral Charge - Cat
-			61336,  -- Survival Instincts
-			50334,  -- Berserk
-			22570,  -- Maim
-			18562,  -- Swiftmend
-			5211,   -- Bash
-			22842,  -- Frenzied Regeneration
 			16689,  -- Nature's Grasp
-			740,    -- Tranquility
-			80964,  -- Skull Bash
-			80965,  -- Skull Bash
-			29166,  -- Innervate
+			29116,  -- Innervate
+			22842,  -- Frenzied Regeneration
+			106922, -- Might of Ursoc
+			102401, -- Wild Charge
+			132158, -- Nature's Swiftness
+			102359, -- Mass Entanglement
+			99,     -- Disorienting Roar
+			5211,   -- Mighty Bash
+			102793, -- Ursol's Vortex
+			108288, -- Heart of the Wild
+			124974, -- Nature's Vigil
+			102795, -- Bear Hug
+			106952, -- Berserk
+			102342, -- Ironbark
+			106839, -- Skull Bash
+			78675,  -- Solar Beam
+			61336,  -- Survival Instincts
 			-- Shaman
 			57994, -- Wind Shear
 			8056, -- Grounding Totem
