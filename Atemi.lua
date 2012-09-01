@@ -315,23 +315,30 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Paladin
-	[1044] = 25,				--"Hand of Freedom",
-	[96231] = 10,				--"Rebuke",
-	[31884] = 120,				--"Avenging Wrath",
-	[853] = 50,					--"Hammer of Justice",
-	[31935] = 15,				--"Avenger's Shield",
-	[633] = 420,				--"Lay on Hands",
-	[1022] = 180,				--"Hand of Protection",
-	[498] = 40,					--"Divine Protection",
-	[54428] = 120,				--"Divine Plea",
-	[642] = 300,				--"Divine Shield",
-	[6940] = 96,				--"Hand of Sacrifice",
-	[86150] = 120,				--"Guardian of Ancient Kings",
-	[31842] = 180,				--"Divine Favor",
-	[31821] = 120,				--"Aura Mastery",
-	[70940] = 180,				--"Divine Guardian",
-	[20066] = 60,				--"Repentance",
-	[31850] = 180,				--"Ardent Defender",
+	-- abilities
+	[853] = 60,					-- Hammer of Justice
+	[642] = 300,				-- Divine Shield
+	[4987] = 8,					-- Cleanse
+	[498] = 60,					-- Divine Protection
+	[96231] = 15,				-- Rebuke
+	[1022] = 300,				-- Hand of Protection
+	[1044] = 25,				-- Hand of Freedom
+	[31821] = 180,				-- Devotion Aura
+	[31884] = 180,				-- Avenging Wrath
+	[6940] = 120,				-- Hand of Sacrifice
+	[115750] = 120,				-- Blinding Light
+
+	-- talents
+	[85499] = 45,				-- Speed of Light
+	[105593] = 30,				-- First of Justice
+	[20066] = 15,				-- Repentance
+	[114039] = 30,				-- Hand of Purity
+	[105809] = 120,				-- Holy Avenger
+
+	-- specialization
+	[31850] = 180, 				-- Ardent Defender
+	[31935] = 15,				-- Avenger's Shield
+	[54428] = 120,				-- Devine Plea
 
 	--------------------------------------------------------------------------
 	--Priest
@@ -637,19 +644,30 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		89751,  -- Felstorm
 	},
 	["Paladin"] = {
-		1044,   -- Hand of Freedom
-		96231,  -- Rebuke,
-		853,    -- Hammer of Justice
-		1022,   -- Hand of Protection
-		498,    -- Divine Protection
-		54428,  -- Divine Plea
-		6940,   -- Hand of Sacrifice
-		86150,  -- Guardian of Ancient Kings
-		31842,  -- Divine Favor
-		31821,  -- Aura Mastery
-		70940,  -- Divine Guardian
-		20066,  -- Repentance
-		31850,  -- Ardent Defender
+		-- abilities
+		853, -- Hammer of Justice
+		642, -- Divine Shield
+		4987, -- Cleanse
+		498, -- Divine Protection
+		96231, -- Rebuke
+		1022, -- Hand of Protection
+		1044, -- Hand of Freedom
+		31821, -- Devotion Aura
+		31884, -- Avenging Wrath
+		6940, -- Hand of Sacrifice
+		115750, -- Blinding Light
+
+		-- talents
+		85499, -- Speed of Light
+		105593, -- First of Justice
+		20066, -- Repentance
+		114039, -- Hand of Purity
+		105809, -- Holy Avenger
+
+		-- specialization
+		31850, -- Ardent Defender
+		31935, -- Avenger's Shield
+		54428, -- Devine Plea
 	},
 	["Warrior"] = {
 		86346,  -- Colossus Smash
@@ -866,12 +884,10 @@ Atemi.defaults = { -- {{{
 			853,    -- Hammer of Justice
 			1022,   -- Hand of Protection
 			498,    -- Divine Protection
-			54428,  -- Divine Plea
 			6940,   -- Hand of Sacrifice
-			86150,  -- Guardian of Ancient Kings
-			31842,  -- Divine Favor
-			31821,  -- Aura Mastery
-			70940,  -- Divine Guardian
+			31821,  -- Devotion Aura
+			115750, -- Blinding Light
+			54428,  -- Divine Plea
 			20066,  -- Repentance
 			-- Warrior
 			86346,  -- Colossus Smash
