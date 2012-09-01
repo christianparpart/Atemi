@@ -169,21 +169,35 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Death Knight
-	[49039] = 120,				--"Lichborne",
-	[47476] = 60,				--"Strangulate",
-	[48707] = 45,				--"Anti-Magic Shell",
+	-- abilities
 	[49576] = 25,				--"Death Grip",	
-	[47528] = 10,				--"Mind Freeze",
-	[49222] = 60,				--"Bone Shield",
-	[51271] = 60,				--"Pillar of Frost",
-	[51052] = 120,				--"Anti-Magic Zone",
-	[49203] = 60,				--"Hungering Cold",
-	[49028] = 90, 				--"Dancing Rune Weapon",
-	[49206] = 180,				--"Summon Gargoyle",
+	[46584] = 120,				--"Raise Dead",
+	[47528] = 15,				--"Mind Freeze",
+	[47476] = 120,				--"Strangulate",
 	[43265] = 30,				--"Death and Decay",
 	[48792] = 180,				--"Icebound Fortitude",
-	[48743] = 120,				--"Death Pact",
-	[42650] = 600,				--"Army of the Dead",
+	[48707] = 45,				--"Anti-Magic Shell",
+	[47568] = 300,				--"Empower Rune Weapon",
+	[77606] = 60,				--"Dark Simulakrum",
+
+	-- talents
+	[51052] = 120,				--"Anti-Magic Zone",
+	[49039] = 120,				--"Lichborne",
+	[114556] = 180,				--"Purgatory",
+	[108194] = 60,				--"Asphyxiate",
+	[96268] = 30,				--"Death's Advance",
+	[48743] = 120,				--"Death Packt",
+	[108201] = 120,				--"Desecrated Ground",
+	[108199] = 60,				--"Gorefiend's Grasp",
+	[108200] = 60,				--"Remorseless Winter",
+
+	-- specialization
+	[49222] = 60,				--"Bone Shield",
+	[49028] = 90,				--"Dancing Rune Weapon",
+	[51271] = 60,				--"Pillar of Frost",
+	[49206] = 180,				--"Summon Gargoyle",
+	[49016] = 180,				--"Unholy Frenzy",
+	[55233] = 60,				--"Vampiric Blood",
 
 	--------------------------------------------------------------------------
 	--Druid
@@ -550,16 +564,35 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		46924,  -- Blade Storm
 	},
 	["DeathKnight"] = {
-		49039,  -- Lichborne
-		47476,  -- Strangulate
-		48707,  -- Anti-Magic Shell
-		49576,  -- Death Grip
-		47528,  -- Mind Freeze
-		49222,  -- Bone Shield
-		51271,  -- Pillar of Frost
-		51052,  -- Anti-Magic Zone
-		49203,  -- Hungering Cold
-		48792,  -- Icebound Fortitute
+		-- abilities
+		49576, -- Death Grip
+		46584, -- Raise Dead
+		47528, -- Mind Freeze
+		47476, -- Strangulate
+		43265, -- Death and Decay
+		48792, -- Icebound Fortitude
+		48707, -- Anti-Magic Shell
+		47568, -- Empower Rune Weapon
+		77606, -- Dark Simulakrum
+
+		-- talents
+		51052, -- Anti-Magic Zone
+		49039, -- Lichborne
+		114556, -- Purgatory
+		108194, -- Asphyxiate
+		96268, -- Death's Advance
+		48743, -- Death Packt
+		108201, -- Desecrated Ground
+		108199, -- Gorefiend's Grasp
+		108200, -- Remorseless Winter
+
+		-- specialization
+		49222, -- Bone Shield
+		49028, -- Dancing Rune Weapon
+		51271, -- Pillar of Frost
+		49206, -- Summon Gargoyle
+		49016, -- Unholy Frenzy
+		55233, -- Vampiric Blood
 	},
 	["misc"] = {
 		58984,  -- Shadowmeld (Nightelf racial)
