@@ -1,7 +1,7 @@
-## Interface: 40300
+## Interface: 50001
 ## Title: Atemi
 ## Notes: Flexible Enemy Cooldown Tracking
-## Version: 0.2.1
+## Version: 0.4.0
 ## Author: Christian Parpart
 ## SavedVariables: AtemiDB
 ## X-Website: http://github.com/trapni/Atemi
