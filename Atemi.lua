@@ -290,21 +290,35 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Rogue
-	[2094] = 120,				--"Blind",
-	[1766] = 10,				--"Kick",
+	-- abilities
+	[2094] = 180,				--"Blind",
+	[1766] = 15,				--"Kick",
+	[1776] = 10,				--"Gauge",
 	[2983] = 60,				--"Sprint",
-	[14185] = 300,				--"Preparation",
-	[31224] = 70,				--"Cloak of Shadows",
-	[1856] = 120,				--"Vanish",
-	[36554] = 24,				--"Shadowstep",
+	[31224] = 120,				--"Cloak of Shadows",
+	[5938] = 10,				--"Shiv",
+	[1856] = 180,				--"Vanish",
 	[5277] = 180,				--"Evasion",
 	[408] = 20,					--"Kidney Shot",
 	[51722] = 60,				--"Dismantle",
+	[114842] = 60,				--"Shadow Walk",
+	[114018] = 300,				--"Shroud of Concealment",
+	[73981] = 60,				--"Redirect" (talented: w/o cooldown)
 	[76577] = 180,				--"Smoke Bomb",
-	[14177] = 120,				--"Cold Blood",
+	[121471] = 180,				--"Shadow Blades",
+
+	-- talents
+	[14185] = 300,				--"Preparation", (sprint, vanish, cloak, evasion, dismantle)
+	[36554] = 24,				--"Shadowstep",
+	[74001] = 120,				--"Combat Readiness",
+	[31230] = 90,				--"Cheat Death",
+
+	-- specialization
+	[79140] = 120,				--"Vendetta",
 	[51690] = 120,				--"Killing Spree",
 	[51713] = 60, 				--"Shadow Dance",
-	[79140] = 120,				--"Vendetta",
+	[13750] = 180,				--"Adrenaline Rush",
+	[14183] = 20,				--"Premeditation",
 
 	--------------------------------------------------------------------------
 	--Shaman
@@ -370,19 +384,35 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 	["Rogue"] = {
-		2094,   -- Blind
-		1766,   -- Kick
-		2983,   -- Sprint
-		14185,  -- Preparation
-		31224,  -- Cloak of Shadows
-		1856,   -- Vanish
-		36554,  -- Shadowstep
-		5277,   -- Evasion
-		408,    -- Kidney Shot
-		51722,  -- Dismantle
-		76577,  -- Smoke Bomb
-		51690,  -- Killing Spree
-		51713,  -- Shadow Dance
+		-- abilities
+		408, -- Kidney Shot
+		1766, -- Kick
+		1776, -- Gauge
+		1856, -- Vanish
+		2094, -- Blind
+		2983, -- Sprint
+		5277, -- Evasion
+		5938, -- Shiv
+		31224, -- Cloak of Shadows
+		51722, -- Dismantle
+		73981, -- Redirect (talented: w/o cooldown)
+		76577, -- Smoke Bomb
+		114018, -- Shroud of Concealment
+		114842, -- Shadow Walk
+		121471, -- Shadow Blades
+
+		-- talents
+		14185, -- Preparation, (sprint, vanish, cloak, evasion, dismantle)
+		31230, -- Cheat Death
+		36554, -- Shadowstep
+		74001, -- Combat Readiness
+
+		-- specialization
+		13750, -- Adrenaline Rush
+		14183, -- Premeditation
+		51690, -- Killing Spree
+		51713, -- Shadow Dance
+		79140, -- Vendetta
 	},
 	["Mage"] = {
 		2139,   -- Counterspell
@@ -545,11 +575,8 @@ Atemi.COOLDOWN_RESET_MAP = {
 	[14185] = { -- Rogue: Preparation
 		2983,  -- Sprint
 		1856,  -- Vanish
-		36554, -- Shadowstep
 		36554, -- Evasion
-		1766,  -- Kick (XXX only with Preparation Glyph)
-		51722, -- Dismantle (XXX only with Preparation Glyph)
-		76577, -- Smoke Bomb (XXX only with Preparation Glyph)
+		51722, -- Dismantle
 	},
 	[23989] = { -- Hunter: Readiness
 		19263, -- Deterrence
