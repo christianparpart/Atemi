@@ -439,18 +439,28 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Warlock
-	[74434] = 45,				--"Soulburn",
-	[30283] = 20,				--"Shadowfury",
-	[6789] = 90,				--"Death Coil",
-	[17962] = 8,				--"Conflagrate",
-	[74434] = 45,				--"Soulburn",
-	[6229] = 30,				--"Shadow Ward",
-	[5484] = 32,				--"Howl of Terror",
-	[54785] = 45,				--"Demon Leap",
-	[48020] = 26,				--"Demonic Circle: Teleport",
-	[17877] = 15,				--"Shadowburn",
-	[71521] = 12,				--"Hand of Gul'dan",
-	[91711] = 30,				--"Nether Ward",
+	-- talents
+	[103135] = 24,				-- Felhunter: Spell Lock
+	[48020] = 30,				-- Demonic Circle: Teleport
+	[48018] = 360,				-- Demonic Circle: Summon (this is not a cooldown, but the time the portal is alive)
+	[77801] = 120,				-- Dark Soul
+
+	-- abilities
+	[108359] = 120,				-- Dark Regeneration
+	[5484] = 40,				-- Howl of Terror
+	[6789] = 45,				-- Mortal Coil
+	[30283] = 30,				-- Shadowfury
+	[110913] = 180,				-- Dark Bargain
+	[108416] = 60,				-- Sacrificial Pact
+	[111397] = 10,				-- Blood Fear
+	[108482] = 60,				-- Unbound Will
+	[108503] = 120,				-- Grimoire of Sacrifice
+	[108501] = 120,				-- Grimoire of Service
+	[108505] = 120,				-- Archimonde's Vengeance
+	[119049] = 60,				-- Kil'jaeden's Cunning
+
+	-- specialization
+	[109151] = 10,				-- Demonic Leap
 
 	--------------------------------------------------------------------------
 	--Warrior
@@ -690,14 +700,28 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		51490, -- Thunderstorm
 	},
 	["Warlock"] = {
-		6789,   -- Death Coil
-		5484,   -- Howl of Terror
-		48020,  -- Demonic Circle: Teleport
-		-- Warlock Pets
-		19647,  -- Spell Lock
-		7812,   -- Sacrifice
-		89766,  -- Axe Toss
-		89751,  -- Felstorm
+		-- talents
+		103135, -- Felhunter: Spell Lock
+		48020, -- Demonic Circle: Teleport
+		48018, -- Demonic Circle: Summon (this is not a cooldown, but the time the portal is alive)
+		77801, -- Dark Soul
+
+		-- abilities
+		108359, -- Dark Regeneration
+		5484, -- Howl of Terror
+		6789, -- Mortal Coil
+		30283, -- Shadowfury
+		110913, -- Dark Bargain
+		108416, -- Sacrificial Pact
+		111397, -- Blood Fear
+		108482, -- Unbound Will
+		108503, -- Grimoire of Sacrifice
+		108501, -- Grimoire of Service
+		108505, -- Archimonde's Vengeance
+		119049, -- Kil'jaeden's Cunning
+
+		-- specialization
+		109151, -- Demonic Leap
 	},
 	["Paladin"] = {
 		-- abilities
@@ -937,14 +961,13 @@ Atemi.defaults = { -- {{{
 			16190, -- Mana Tide Totem,
 			98008, -- Spirit Link totem
 			-- Warlock
-			6789,   -- Death Coil
-			5484,   -- Howl of Terror
-			48020,  -- Demonic Circle: Teleport
-			-- Warlock Pets
-			19647,  -- Spell Lock
-			7812,   -- Sacrifice
-			89766,  -- Axe Toss
-			89751,  -- Felstorm
+			103135, -- Felhunter: Spell Lock
+			48020, -- Demonic Circle: Teleport
+			48018, -- Demonic Circle: Summon (this is not a cooldown, but the time the portal is alive)
+			5484, -- Howl of Terror
+			6789, -- Mortal Coil
+			30283, -- Shadowfury
+			111397, -- Blood Fear
 			-- Paladin
 			1044,   -- Hand of Freedom
 			96231,  -- Rebuke
