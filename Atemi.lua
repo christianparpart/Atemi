@@ -246,19 +246,36 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Hunter
-	[82726] = 120,				--"Fervor",
-	[19386] = 54,				--"Wyvern Sting",
-	[3045] = 180,				--"Rapid Fire",
-	[53351] = 10,				--"Kill Shot",
-	[53271] = 45, 				--"Master's Call",
-	[51753] = 60,				--"Camouflage",
-	[19263] = 120,				--"Deterrence",
-	[19503] = 30,				--"Scatter Shot",
-	[23989] = 180,				--"Readiness",
-	[34490] = 20,				--"Silencing Shot",
-	[19574] = 90,				--"Bestial Wrath",      
-	[1499] = 24,				-- Freezing Trap
-	[13809] = 24,				-- Ice Trap
+	-- abilities
+	[781] = 25,					-- Disengage
+	[19503] = 30,				-- Scatter Shot
+	[1499] = 30,				-- Freezing Trap
+	[5384] = 30,				-- Feign Death
+	[1543] = 20,				-- Flare
+	[13809] = 30,				-- Ice Trap
+	[3045] = 180,				-- Rapid Fire
+	[23989] = 300,				-- Readiness
+	[34600] = 30,				-- Snake Trap
+	[53271] = 45,				-- Master's Call
+	[19263] = 120,				-- Deterrence
+	[51753] = 60,				-- Camouflage
+	[121818] = 300,				-- Stampede
+
+	-- talents
+	[109248] = 45,				-- Binding Shot
+	[34490] = 20,				-- Silencing Shot
+	[19386] = 60,				-- Wyvern Sting
+	[109304] = 120,				-- Exhilaration
+	[120679] = 30,				-- Dire Beast
+	[131894] = 120,				-- A Murder of Crows
+	[130392] = 20,				-- Blink Strike
+	[120679] = 90,				-- Lynx Rush
+	[120360] = 30,				-- Barrage
+	[109259] = 60,				-- Powershot
+
+	-- specialization
+	[19574] = 60,				-- Bestial Wrath
+	[19577] = 60,				-- Intimidation
 
 	--------------------------------------------------------------------------
 	--Mage
@@ -490,18 +507,36 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		62618,     -- Power Word: Barrier
 	},
 	["Hunter"] = {
-		82726,  -- Fervor
-		3045,   -- Rapid Fire
-		19386,  -- Wyvern Sting
-		53271,  -- Master's Call (bound to pet)
-		51753,  -- Camouflage
-		19263,  -- Deterrence
-		19503,  -- Scatter Shot
-		23989,  -- Readiness
-		34490,  -- Silencing Shot
-		19574,  -- Bestial Wrath
-		1499,   -- Freezing Trap
-		13809,  -- Ice Trap
+		-- abilities
+		781, -- Disengage
+		19503, -- Scatter Shot
+		1499, -- Freezing Trap
+		5384, -- Feign Death
+		1543, -- Flare
+		13809, -- Ice Trap
+		3045, -- Rapid Fire
+		23989, -- Readiness
+		34600, -- Snake Trap
+		53271, -- Master's Call
+		19263, -- Deterrence
+		51753, -- Camouflage
+		121818, -- Stampede
+
+		-- talents
+		109248, -- Binding Shot
+		34490, -- Silencing Shot
+		19386, -- Wyvern Sting
+		109304, -- Exhilaration
+		120679, -- Dire Beast
+		131894, -- A Murder of Crows
+		130392, -- Blink Strike
+		120679, -- Lynx Rush
+		120360, -- Barrage
+		109259, -- Powershot
+
+		-- specialization
+		19574, -- Bestial Wrath
+		19577, -- Intimidation
 	},
 	["Druid"] = {
 		-- abilities
@@ -654,13 +689,28 @@ Atemi.COOLDOWN_RESET_MAP = {
 		51722, -- Dismantle
 	},
 	[23989] = { -- Hunter: Readiness
-		19263, -- Deterrence
-		34490, -- Silencing Shot
-		19503, -- Scatter Shot
-		3045,  -- Rapid Fire
-		53351, -- Kill Shot
-		1499,  -- Freezing Trap
-		13809, -- Ice Trap
+		781,     -- Disengage
+		19503,   -- Scatter Shot
+		1499,    -- Freezing Trap
+		5384,    -- Feign Death
+		1543,    -- Flare
+		13809,   -- Ice Trap
+		3045,    -- Rapid Fire
+		34600,   -- Snake Trap
+		53271,   -- Master's Call (?)
+		19263,   -- Deterrence
+		51753,   -- Camouflage
+		109248,  -- Binding Shot
+		34490,   -- Silencing Shot
+		19386,   -- Wyvern String
+		109304,  -- Exhilaration
+		120679,  -- Dire Beast
+		131894,  -- A Murder of Crows
+		1330392, -- Blink Strike (?)
+		120360,  -- Barrage
+		109259,  -- Powershot
+		19574,   -- Bestial Wrath
+		19577,   -- Intimidation
 	},
 	[11958] = { -- Mage: Cold Snap
 		44572, -- Deep Freeze
