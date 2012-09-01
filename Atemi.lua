@@ -342,23 +342,39 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Priest
-	[89485] = 45,				--"Inner Focus",
-	[64044] = 90,				--"Psychic Horror",
-	[8122] = 23,				--"Psychic Scream",
-	[15487] = 45,				--"Silence",
-	[47585] = 75,				--"Dispersion",
-	[33206] = 180,				--"Pain Suppression",
-	[10060] = 120,				--"Power Infusion",
-	[88625] = 25,				--"Holy Word: Chastise",
-	[586] = 15,					--"Fade",
-	[32379] = 10,				--"Shadow Word: Death",
-	[6346] = 180,				--"Fear Ward",
-	[64901] = 360,				--"Hymn of Hope",
-	[64843] = 480,				--"Divine Hymn",
-	[73325] = 90,				--"Leap of Faith",
-	[19236] = 120	,			--"Desperate Prayer",
-	[724] = 180,				--"Lightwell",
-	[62618] = 120,				--"Power Word: Barrier",
+	-- abilities
+	[8122] = 30,				-- Psychic Scream
+	[528] = 8,					-- Dispel Magic
+	[586] = 30,					-- Fade
+	[34433] = 180,				-- Shadowfiend
+	[6346] = 180,				-- Fear Ward
+	[64901] = 360,				-- Hymn of Hope
+	[32375] = 15,				-- Mass Dispell
+	[73325] = 90,				-- Leap of Faith
+	[108968] = 360,				-- Void Shift
+
+	-- talents
+	[605] = 30,					-- Dominate Mind
+	[108921] = 45,				-- Psyfiend
+	[108920] = 30,				-- Void Tendrils
+	[123040] = 60,				-- Mindbender
+	[19236] = 120,				-- Desperate Prayer
+	[112883] = 30,				-- Spectral Guise
+	[10060] = 120,				-- Power Infusion
+
+	-- specialization
+	[47585] = 120,				-- Dispersion
+	[64843] = 180,				-- Devine Hymn
+	[47788] = 180,				-- Guardian Spirit
+	[88625] = 30,				-- Holy Word: Chastise
+	[89485] = 45,				-- Inner Focus
+	[724] = 180,				-- Light Well
+	[33206] = 180,				-- Pain Suppression
+	[62618] = 180,				-- Power Word: Barrier
+	[64044] = 45,				-- Psychic Horror
+	[527] = 8,					-- Purify
+	[15487] = 45,				-- Silence
+	[109964] = 60,				-- Spirit Shell
 
 	--------------------------------------------------------------------------
 	--Rogue
@@ -525,19 +541,39 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		31661, -- Dragon's Breath
 	},
 	["Priest"] = {
-		89485,     -- Inner Focus
-		64044,     -- Psychic Horror
-		8122,      -- Psychic Scream
-		15487,     -- Silence
-		47585,     -- Dispersion
-		33206,     -- Pain Suppression
-		88625,     -- Holy Word: Chastise
-		586,       -- Fade
-		64901,     -- Hymn of Hope
-		64843,     -- Devine Hymn
-		19236,     -- Desperate Prayer
-		724,       -- Lightwell
-		62618,     -- Power Word: Barrier
+		-- abilities
+		8122, -- Psychic Scream
+		528, -- Dispel Magic
+		586, -- Fade
+		34433, -- Shadowfiend
+		6346, -- Fear Ward
+		64901, -- Hymn of Hope
+		32375, -- Mass Dispell
+		73325, -- Leap of Faith
+		108968, -- Void Shift
+
+		-- talents
+		605, -- Dominate Mind
+		108921, -- Psyfiend
+		108920, -- Void Tendrils
+		123040, -- Mindbender
+		19236, -- Desperate Prayer
+		112883, -- Spectral Guise
+		10060, -- Power Infusion
+
+		-- specialization
+		47585, -- Dispersion
+		64843, -- Devine Hymn
+		47788, -- Guardian Spirit
+		88625, -- Holy Word: Chastise
+		89485, -- Inner Focus
+		724, -- Light Well
+		33206, -- Pain Suppression
+		62618, -- Power Word: Barrier
+		64044, -- Psychic Horror
+		527, -- Purify
+		15487, -- Silence
+		109964, -- Spirit Shell
 	},
 	["Hunter"] = {
 		-- abilities
@@ -816,18 +852,27 @@ Atemi.defaults = { -- {{{
 			-- Mage Pet: Water Elemental
 			33395,  -- Freeze
 			-- Priest
-			89485,     -- Inner Focus
-			64044,     -- Psychic Horror
-			8122,      -- Psychic Scream
-			15487,     -- Silence
-			47585,     -- Dispersion
-			33206,     -- Pain Suppression
-			88625,     -- Holy Word: Chastise
-			586,       -- Fade
-			64901,     -- Hymn of Hope
-			64843,     -- Devine Hymn
-			19236,     -- Desperate Prayer
-			62618,     -- Power Word: Barrier
+			8122, -- Psychic Scream
+			34433, -- Shadowfiend
+			6346, -- Fear Ward
+			64901, -- Hymn of Hope
+			73325, -- Leap of Faith
+			108968, -- Void Shift
+			605, -- Dominate Mind
+			108921, -- Psyfiend
+			108920, -- Void Tendrils
+			123040, -- Mindbender
+			19236, -- Desperate Prayer
+			112883, -- Spectral Guise
+			47585, -- Dispersion
+			64843, -- Devine Hymn
+			47788, -- Guardian Spirit
+			88625, -- Holy Word: Chastise
+			89485, -- Inner Focus
+			33206, -- Pain Suppression
+			62618, -- Power Word: Barrier
+			64044, -- Psychic Horror
+			15487, -- Silence
 			-- Hunter
 			82726,  -- Fervor
 			3045,   -- Rapid Fire
