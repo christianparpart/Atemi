@@ -279,26 +279,39 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Mage
-	[2139] = 24,				--"Counterspell",
-	[44572] = 30,				--"Deep Freeze",
-	[11958] = 384,				--"Cold Snap",
-	[45438] = 300,				--"Ice Block",			
-	[12042] = 106,				--"Arcane Power",		
-	[12051] = 240,				--"Evocation", 
-	[120] = 8,                  -- Cone of Cold (10 seconds, if untalented)
-	[122] = 20,					--"Frost Nova",	
-	[11426] = 24,				--"Ice Barrier", 
-	[12472] = 144,				--"Icy Veins",
-	[82731] = 60,				--"Flame Orb", 
-	[55342] = 180,				--"Mirror Image", 
-	[66] = 132,					--"Invisibility",
+	-- abilities
 	[1953] = 15,				-- Blink
-	[82676] = 120,				--"Ring of Frost",
-	[80353] = 300, 				--"Time Warp",
-	[11113] = 15, 				--"Blast Wave",
-	[12043] = 90,				--"Presence of Mind",
-	[11129] = 120,				--"Combustion",
-	[31661] = 17,				--"Dragon's Breath",	
+	[122] = 25,					-- Frost Nova
+	[2139] = 24,				-- Counterspell
+	[45438] = 300,				-- Ice Block
+	[475] = 8,					-- Remove Curse
+	[12051] = 120,				-- Evocation
+	[55342] = 180,				-- Mirror Image
+	[66] = 300,					-- Invisibility
+	[44572] = 30,				-- Deep Freeze
+	[120] = 8,                  -- Cone of Cold
+
+	-- talents
+	[108839] = 60,				-- Ice Floes
+	[12043] = 90,				-- Presence of Mind
+	[108843] = 25,				-- Blazing Speed
+	[11426] = 25,				-- Ice Barrier
+	[115610] = 25,				-- Temporal Shield
+	[102051] = 20,				-- Frostjaw
+	[113724] = 30,				-- Ring of Frost
+	[86949] = 120,				-- Cautarize
+	[11958] = 180,				-- Cold Snap
+	[110959] = 150,				-- Greater Invisibility
+	[112948] = 10,				-- Frost Bomb
+	[116011] = 6,				-- Rune of Power
+
+	-- specialization
+	[12042] = 90,				-- Arcane Power
+	[11129] = 45,				-- Combustion
+	[84714] = 60,				-- Frozen Orb
+	[12472] = 180,				-- Icy Veins
+	[31687] = 60,				-- Summon Water Elemental
+	[31661] = 20,				-- Dragon's Breath
 
 	--------------------------------------------------------------------------
 	--Paladin
@@ -467,29 +480,42 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		79140, -- Vendetta
 	},
 	["Mage"] = {
-		2139,   -- Counterspell
-		44572,  -- Deep Freeze
-		11958,  -- Cold Snap
-		45438,  -- Ice Block
-		12042,  -- Arcane Power
-		12051,  -- Evocation
-		120,    -- Cone of Cold
-		122,    -- Frost Nova
-		11426,  -- Ice Barrier
-		12472,  -- Icy Veins
-		82731,  -- Flame Orb
-		55342,  -- Mirror Image
-		66,     -- Invisibility
-		1953,   -- Blink
-		82676,  -- Ring of Frost
-		12043,  -- Presence of Mind
-		31661,  -- Dragon's Breath
 		-- Pet: Water Elemental
 		33395,  -- Freeze
-		-- spells below not allowed and/or used in Arenas
---		80353,  -- Time Warp
---		11113,  -- Blast Wave
---		11129,  -- Combustion
+
+		-- abilities
+		1953, -- Blink
+		122, -- Frost Nova
+		2139, -- Counterspell
+		45438, -- Ice Block
+		475, -- Remove Curse
+		12051, -- Evocation
+		55342, -- Mirror Image
+		66, -- Invisibility
+		44572, -- Deep Freeze
+		120, -- Cone of Cold
+
+		-- talents
+		108839, -- Ice Floes
+		12043, -- Presence of Mind
+		108843, -- Blazing Speed
+		11426, -- Ice Barrier
+		115610, -- Temporal Shield
+		102051, -- Frostjaw
+		113724, -- Ring of Frost
+		86949, -- Cautarize
+		11958, -- Cold Snap
+		110959, -- Greater Invisibility
+		112948, -- Frost Bomb
+		116011, -- Rune of Power
+
+		-- specialization
+		12042, -- Arcane Power
+		11129, -- Combustion
+		84714, -- Frozen Orb
+		12472, -- Icy Veins
+		31687, -- Summon Water Elemental
+		31661, -- Dragon's Breath
 	},
 	["Priest"] = {
 		89485,     -- Inner Focus
@@ -713,12 +739,9 @@ Atemi.COOLDOWN_RESET_MAP = {
 		19577,   -- Intimidation
 	},
 	[11958] = { -- Mage: Cold Snap
-		44572, -- Deep Freeze
 		45438, -- Ice Block
-		12472, -- Icy Veins
-		82676, -- Ring of Frost
 		122,   -- Frost Nova
-		11426, -- Ice Barrier
+		120,   -- Cone of Cold
 	}
 }
 -- }}}
