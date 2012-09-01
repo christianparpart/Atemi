@@ -410,22 +410,32 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Shaman
-	[98008] = 120,				--"Spirit Link Totem",
-	[8177] = 13.5,				--"Grounding Totem",
-	[57994] = 5,				--"Wind Shear",
-	[32182] = 300,				--"Heroism",
-	[2825] = 300,				--"Bloodlust",
-	[51533] = 120,				--"Feral Spirit",
-	[16190] = 180,				--"Mana Tide Totem",
-	[30823] = 60,				--"Shamanistic Rage",
-	[51490] = 35,				--"Thunderstorm",
-	[2484] = 15,				--"Earthbind Totem",
-	[8143] = 60,				--"Tremor Totem", patch 4.0.6
-	[5730] = 20,				--"Stoneclaw Totem",
-	[51514] = 35,				--"Hex",
-	[79206] = 120,				--"Spiritwalker's Grace",
-	[16166] = 180,				--"Elemental Mastery",
-	[16188] = 120,				--"Nature's Swiftness",
+	-- abilities
+	[57994] = 12,				-- Wind Shear
+	[51886] = 8,				-- Cleanse Spirit
+	[8056] = 6,					-- Frost Shock
+	[8711] = 25,				-- Grounding Totem
+	[8143] = 60,				-- Tremor Totem
+	[51514] = 45,				-- Hex
+	[79206] = 120,				-- Spiritwalker's Grace
+	[114049] = 180,				-- Ascendance
+
+	-- talents
+	[108271] = 120,				-- Astral Shift
+	[51485] = 30,				-- Earthgrab Totem
+	[108273] = 60,				-- Windwalk Totem
+	[108285] = 180,				-- Call of the Elements
+	[16188] = 60,				-- Ancestral Swiftness
+	[16166] = 120,				-- Elemental Mastery
+	[108281] = 120,				-- Ancestral Guidance
+
+	-- specialization
+	[16190] = 180,				-- Mana Tide Totem
+	[77130] = 8,				-- Purify Spirit
+	[30823] = 60,				-- Shamanistic Rage
+	[98008] = 180,				-- Spirit Link Totem
+	[58875] = 120,				-- Spirit Walk
+	[51490] = 45,				-- Thunderstorm
 
 	--------------------------------------------------------------------------
 	--Warlock
@@ -652,22 +662,32 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		61336,  -- Survival Instincts
 	},
 	["Shaman"] = {
-		98008,  -- Spirit Link Totem
-		8177,   -- Grounding Totem
-		57994,  -- Wind Shear
-		51533,  -- Feral Spirit
-		16190,  -- Mana Tide Totem
-		30823,  -- Shamanistic Rage
-		51490,  -- Thunderstorm
-		2484,   -- Earthbind Totem,
-		8143,   -- Tremor Totem, patch 4.0.6
-		5730,   -- Stoneclaw Totem
-		51514,  -- Hex
-		79206,  -- Spiritwalker's Grace
-		16166,  -- Elemental Mastery
-		16188,  -- Nature's Swiftness
---		32182,  -- Heroism
---		2825,   -- Bloodlust
+		-- abilities
+		57994, -- Wind Shear
+		51886, -- Cleanse Spirit
+		8056, -- Frost Shock
+		8711, -- Grounding Totem
+		8143, -- Tremor Totem
+		51514, -- Hex
+		79206, -- Spiritwalker's Grace
+		114049, -- Ascendance
+
+		-- talents
+		108271, -- Astral Shift
+		51485, -- Earthgrab Totem
+		108273, -- Windwalk Totem
+		108285, -- Call of the Elements
+		16188, -- Ancestral Swiftness
+		16166, -- Elemental Mastery
+		108281, -- Ancestral Guidance
+
+		-- specialization
+		16190, -- Mana Tide Totem
+		77130, -- Purify Spirit
+		30823, -- Shamanistic Rage
+		98008, -- Spirit Link Totem
+		58875, -- Spirit Walk
+		51490, -- Thunderstorm
 	},
 	["Warlock"] = {
 		6789,   -- Death Coil
@@ -796,6 +816,13 @@ Atemi.COOLDOWN_RESET_MAP = {
 		45438, -- Ice Block
 		122,   -- Frost Nova
 		120,   -- Cone of Cold
+	},
+	[108285] = { -- Shaman: Call of the Elements
+		8711, -- Grounding Totem
+		8143, -- Tremor Totem
+		51485, -- Earthgrab Totem
+		108273, -- Windwalk Totem
+		16190, -- Mana Tide Totem
 	}
 }
 -- }}}
@@ -902,18 +929,13 @@ Atemi.defaults = { -- {{{
 			80965,  -- Skull Bash
 			29166,  -- Innervate
 			-- Shaman
-			98008,  -- Spirit Link Totem
-			8177,   -- Grounding Totem
-			57994,  -- Wind Shear
-			51533,  -- Feral Spirit
-			16190,  -- Mana Tide Totem
-			30823,  -- Shamanistic Rage
-			2484,   -- Earthbind Totem,
-			8143,   -- Tremor Totem, patch 4.0.6
-			51514,  -- Hex
-			79206,  -- Spiritwalker's Grace
-			16166,  -- Elemental Mastery
-			16188,  -- Nature's Swiftness
+			57994, -- Wind Shear
+			8056, -- Grounding Totem
+			8143, -- Tremor Totem
+			51514, -- Hex
+			79206, -- Spiritwalker's Grace
+			16190, -- Mana Tide Totem,
+			98008, -- Spirit Link totem
 			-- Warlock
 			6789,   -- Death Coil
 			5484,   -- Howl of Terror
