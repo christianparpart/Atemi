@@ -464,30 +464,34 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 
 	--------------------------------------------------------------------------
 	--Warrior
-	[12292] = 144, 				--"Death Wish",
-	[86346] = 20,				--"Colossus Smash",
-	[85730] = 120,				--"Deadly Calm",
-	[85388] = 45,				--"Throwdown",
-	[100] = 13,					--"Charge",
-	[6552] = 10,				--"Pummel",
-	[23920] = 20,				--"Spell Reflection",
-	[2565] = 30,				--"Shield Block",
-	[676] = 60,					--"Disarm",
-	[5246] = 120,				--"Intimidation Shout",
-	[871] = 120,				--"Shield Wall",	
-	[20252] = 20,				--"Intercept",
-	[20230] = 300,				--"Retaliation",
-	[1719] = 240,				--"Recklessness",
-	[3411] = 30,				--"Intervene",
-	[64382] = 90,				--"Shattering Throw",
-	[6544] = 40,				--"Heroic Leap",
-	[12809] = 30,				--"Concussion Blow",
-	[12975] = 180,				--"Last Stand",
-	[12328] = 60,				--"Sweeping Strikes",
-	[85730] = 120,				--"Deadly Calm",
-	[60970] = 30,				--"Heroic Fury",
-	[46924] = 75,				--"Bladestorm",
-	[46968] = 17,				--"Shockwave",
+	-- abilities
+	[100] = 13,					-- Charge
+	[57755] = 30,				-- Heroic Throw
+	[6552] = 15,				-- Pummel
+	[676] = 60,					-- Disarm
+	[871] = 300,				-- Shield Wall
+	[5246] = 60,				-- Intimidating Shout
+	[18499] = 30,				-- Berserker Rage
+	[1719] = 300,				-- Recklesness
+	[23920] = 25,				-- Spell Reflection
+	[3411] = 30,				-- Intervene
+	[64382] = 300,				-- Shattering Throw
+	[6544] = 45,				-- Heroic Leap
+
+	-- talents
+	[55694] = 60,				-- Enraged Regeneration
+	[102060] = 40,				-- Disrupting Shout
+	[107566] = 40,				-- Staggering Shout
+	[46924] = 90,				-- Bladestorm
+	[46968] = 20,				-- Shockwave
+	[114028] = 60,				-- Mass Spell Reflection
+	[114029] = 30,				-- Safeguard
+	[114030] = 120,				-- Vigilance
+	[107574] = 180,				-- Avatar
+	[107570] = 30,				-- Storm Bolt
+
+	-- specialization
+	[12975] = 180,				-- Last Stand
 } -- }}}
 
 Atemi.CLASS_COOLDOWN_MAP = { -- {{{
@@ -750,19 +754,34 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		54428, -- Devine Plea
 	},
 	["Warrior"] = {
-		86346,  -- Colossus Smash
-		85388,  -- Throwdown
-		100,    -- Charge
-		6552,   -- Pummel
-		23920,  -- Spell Reflection
-		676,    -- Disarm
-		5246,   -- Intimidation Shout
-		871,    -- Shield Wall
-		20252,  -- Intercept
-		3411,   -- Intervene
-		64382,  -- Shattering Blow
-		12975,  -- Last Stand
-		46924,  -- Blade Storm
+		-- abilities
+		100, -- Charge
+		57755, -- Heroic Throw
+		6552, -- Pummel
+		676, -- Disarm
+		871, -- Shield Wall
+		5246, -- Intimidating Shout
+		18499, -- Berserker Rage
+		1719, -- Recklesness
+		23920, -- Spell Reflection
+		3411, -- Intervene
+		64382, -- Shattering Throw
+		6544, -- Heroic Leap
+
+		-- talents
+		55694, -- Enraged Regeneration
+		102060, -- Disrupting Shout
+		107566, -- Staggering Shout
+		46924, -- Bladestorm
+		46968, -- Shockwave
+		114028, -- Mass Spell Reflection
+		114029, -- Safeguard
+		114030, -- Vigilance
+		107574, -- Avatar
+		107570, -- Storm Bolt
+
+		-- specialization
+		12975, -- Last Stand
 	},
 	["DeathKnight"] = {
 		-- abilities
@@ -980,19 +999,14 @@ Atemi.defaults = { -- {{{
 			54428,  -- Divine Plea
 			20066,  -- Repentance
 			-- Warrior
-			86346,  -- Colossus Smash
-			85388,  -- Throwdown
-			100,    -- Charge
-			6552,   -- Pummel
-			23920,  -- Spell Reflection
-			676,    -- Disarm
-			5246,   -- Intimidation Shout
-			871,    -- Shield Wall
-			20252,  -- Intercept
-			3411,   -- Intervene
-			64382,  -- Shattering Blow
-			12975,  -- Last Stand
-			46924,  -- Blade Storm
+			6552, -- Pummel
+			676, -- Disarm
+			5246, -- Intimidation Shout
+			23920, -- Spell Reflection
+			46968, -- Shockwave
+			114028, -- Mass Spell Reflection
+			107570, -- Storm Bold
+			12975, -- Last Stand
 			-- Death Knight
 			49039,  -- Lichborne
 			47476,  -- Strangulate
