@@ -1,2 +1,4 @@
 *.zip
 .svn
+libs/Ace3/.docmeta
+libs/Ace3/.pkgmeta
