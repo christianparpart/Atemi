@@ -27,6 +27,7 @@ L['Y-offset'] = "Y-Offset"
 L['icon offset to the Y-axis relative to its nameplate parent'] = "Symbol-offset in Pixel der Y-Axe relativ zur Namensplakette"
 
 L['Cooldowns'] = "Cooldowns"
+L['Monk'] = "Mönch"
 L['Rogue'] = "Schurke"
 L['Mage'] = "Magier"
 L['Priest'] = "Priester"

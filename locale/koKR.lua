@@ -27,6 +27,7 @@ L['Y-offset'] = "위치-세로"
 L['icon offset to the Y-axis relative to its nameplate parent'] = "아이콘의 y 위치"
 
 L['Cooldowns'] = "쿨다운"
+L['Monk'] = "Monk" -- TODO: translate me. :)
 L['Rogue'] = "도적"
 L['Mage'] = "마법사"
 L['Priest'] = "사제"

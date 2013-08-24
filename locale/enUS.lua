@@ -27,6 +27,7 @@ L['Y-offset'] = true
 L['icon offset to the Y-axis relative to its nameplate parent'] = true
 
 L['Cooldowns'] = true
+L['Monk'] = true
 L['Rogue'] = true
 L['Mage'] = true
 L['Priest'] = true
