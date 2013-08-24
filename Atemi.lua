@@ -1635,6 +1635,70 @@ function Atemi:GetSpellCooldown(spellID)
 	end
 end
 
+
+--[[
+  @brief Dumps a tree of a given frame, its childrens and regions.
+
+  @param frame the frame to dump
+  @param a string prefix to aid contextual readability
+
+  Lists frame structure recursively to aid debugging.
+]]
+function Atemi:DumpFrame(frame, prefix)
+	if frame then
+		print(prefix, frame, frame:GetName(), frame:GetObjectType(), "-->")
+		--if frame:GetObjectType() == "Frame" then
+		if frame:IsObjectType("Frame") then
+			-- Regions
+			local regions = frame:GetNumRegions()
+			if regions and regions > 0 then
+				print(prefix.."  ", "Regions of", frame, ":")
+				for i = 1, regions do
+					local r = select(i, frame:GetRegions())
+					print(prefix.."/r"..i.."  ", r:GetObjectType(), r.GetText and r:GetText()) 
+				end
+			end
+			-- Children
+			local children = frame:GetNumChildren() 
+			if children and children > 0 then
+				print(prefix.."  ", "Children of", frame, ":")
+				for i = 1, children do
+					print(prefix .. "/c" .. i)
+					self:DumpFrame(select(i, frame:GetChildren()), "        "..prefix.."/c"..i) 
+				end
+			end
+		end
+	end
+end
+
+--[[
+  @brief  Retrieves the player name to a nameplate
+
+  @param  nameplateFrame the frame of a nameplate
+
+  @return Retrieves the player name as text
+
+  For this to work, we expect a certain layout of how a nameplate is composed,
+  and this appearently has changed in history, even w/o any other addons interfering.
+
+  The second child frame of the nameplate-frame is the playername frame, whose first and only
+  region contains the textual information.
+]]
+function Atemi:NameplateNameOf(nameplateFrame)
+	local numChildren = nameplateFrame:GetNumChildren();
+	assert(numChildren >= 2)
+	local playerNameFrame = select(2, nameplateFrame:GetChildren())
+	local numRegions = playerNameFrame:GetNumRegions()
+	local playerNameRegion = select(1, playerNameFrame:GetRegions())
+
+	return playerNameRegion:GetText()
+end
+
+--[[
+  @brief Invoked frequently to update timers
+
+  @param elapsed currently unused, the time in ms elapsed since last call
+]]
 function Atemi:OnTimerCallback(elapsed)
 	self:PurgeExpiredCooldowns()
 
@@ -1645,14 +1709,14 @@ function Atemi:OnTimerCallback(elapsed)
 		local isNamePlate = frameName and frameName:find("NamePlate")
 
 		if isNamePlate and frame:IsVisible() then
-			local _, _, _, playerName = frame:GetRegions()
-			playerName = playerName:GetText()
+			local playerName = self:NameplateNameOf(frame)
 			--self:Debug("frameName:", frameName, "playerName:", playerName)
+			--self:DumpFrame(frame, "Frame#"..i)
 
 			local playerCooldowns = self.cooldowns[playerName]
 			if playerCooldowns ~= nil then
+				-- we cache this value
 				if not self.plateWidth then
-					-- we cache this value
 					self.plateWidth = frame:GetWidth()
 				end
 
