@@ -1,5 +1,4 @@
 
-VERSION=0.3.0
 PREFIX=${HOME}/World of Warcraft/Interface/AddOns/Atemi
 
 FILES=embeds.xml Atemi.lua Atemi.toc AtemiCooldown.lua FreeUniversal-Regular.ttf README TODO
@@ -10,7 +9,8 @@ dist:
 	cp -rvp ${FILES} Atemi/
 	cp -rvp locale Atemi/
 	cp -rvp libs Atemi/
-	zip -9 Atemi-${VERSION}.zip -r Atemi
+	grep "Version: " Atemi.toc | awk '{print $$3}'
+	zip -9 -r Atemi-$(shell grep "Version: " Atemi.toc | awk '{print $$3}').zip Atemi
 	rm -rf Atemi
 
 copy:
