@@ -377,6 +377,32 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[109964] = 60,				-- Spirit Shell
 
 	--------------------------------------------------------------------------
+	--Monk
+	-- abilities
+	[116705] = 15,		-- Spear Hand Strike
+	[115203] = 180,		-- Fortifying Brew
+	[101643] = 45,		-- Transcendence
+	[119996] = 25,		-- Transcendence: Transfer
+	[117368] = 60,		-- Grapple Weapon
+	[115078] = 15,		-- Paralysis
+	[137562] = 120,		-- Nimble Brew
+	-- talents
+	[116841] = 30,		-- Tiger's Lust
+	[115399] = 90,		-- Chi Brew
+	[116844] = 45,		-- Ring of Peace
+	[119392] = 30,		-- Charging Ox Wave
+	[119381] = 45,		-- Leg Sweep
+	[122278] = 90,		-- Dampen Harm
+	[122783] = 90,		-- Diffuse Magic
+	[116847] = 30,		-- Rushing Jade Wind
+	[123904] = 180,		-- Invoke Xuen, the White Tiger
+	-- specialization
+	[115288] = 60,		-- Energizing Brew
+	[122470] = 90,		-- Touch of Karma
+	[115176] = 180,		-- Zen Meditation
+	[113656] = 25,		-- Fists of Fury
+
+	--------------------------------------------------------------------------
 	--Rogue
 	-- abilities
 	[2094] = 180,				--"Blind",
@@ -495,6 +521,33 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 } -- }}}
 
 Atemi.CLASS_COOLDOWN_MAP = { -- {{{
+	["Monk"] = {
+		-- abilities
+		116705, -- Spear Hand Strike (*) [15s]
+		115203, -- Fortifying Brew (*) [3m]
+		101643, -- Transcendence [45s]
+		119996, -- Transcendence: Transfer (*) [25s]
+		117368, -- Grapple Weapon (*) [1m]
+		115078, -- Paralysis (*) [15s]
+		137562, -- Nimble Brew (*) [2m]
+
+		-- talents
+		116841, -- Tiger's Lust (*) [30s]
+		115399, -- Chi Brew [1.5m]
+		116844, -- Ring of Peace (*) [45s]
+		119392, -- Charging Ox Wave (*) [30s]
+		119381, -- Leg Sweep (*) [45s]
+		122278, -- Dampen Harm (*) [1.5m]
+		122783, -- Diffuse Magic (*) [1.5m]
+		116847, -- Rushing Jade Wind [30s]
+		123904, -- Invoke Xuen, the White Tiger (*) [3m]
+
+		-- specialization
+		115288, -- Energizing Brew (*) [1m]
+		122470, -- Touch of Karma (*) [1.5m]
+		115176, -- Zen Meditation (*) [3m]
+		113656, -- Fists of Fury (*) [25s]
+	},
 	["Rogue"] = {
 		-- abilities
 		408, -- Kidney Shot
@@ -887,6 +940,21 @@ Atemi.defaults = { -- {{{
 		announceReady = {}, -- list of spells to announce on ready again
 		announceReadyTime = 5, -- time in seconds to announce before it becomes ready again
 		spells = {
+			-- Monk
+			116705, -- Spear Hand Strike
+			115203, -- Fortifying Brew
+			119996, -- Transcendence: Transfer
+			117368, -- Grapple Weapon
+			115078, -- Paralysis
+			137562, -- Nimble Brew
+			116841, -- Tiger's Lust
+			116844, -- Ring of Peace
+			119381, -- Leg Sweep
+			122278, -- Dampen Harm
+			122783, -- Diffuse Magic
+			123904, -- Invoke Xuen, the White Tiger
+			122470, -- Touch of Karma
+			113656, -- Fists of Fury
 			-- Rogue
 			1766, -- Kick
 			1776, -- Gauge
@@ -1180,6 +1248,12 @@ function Atemi:setupOptions()
 				get = '_GetSpellEnabled',
 				set = '_SetWantNameplateIcon',
 				args = {
+					monk = {
+						type = 'group',
+						name = L['Monk'],
+						order = 1,
+						args = self:GetClassOptions("Monk")
+					},
 					rogue = {
 						type = 'group',
 						name = L['Rogue'],
