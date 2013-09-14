@@ -1370,13 +1370,14 @@ function Atemi:GetClassOptions(className)
 			local spellName, _, spellIcon = GetSpellInfo(spellID)
 
 			if spellName ~= nil then
+				local spellTitle = spellName .. " [" .. self:GetSpellCooldown(spellID) .. "s]"
 				local namePrefix = "|Hspell:" .. spellID .. "|h|T" .. tostring(spellIcon) .. ":0|t "
 				local namePostfix = "|h"
 
 				list[tostring(spellID)] = {
 					type = 'group',
-					name = namePrefix .. spellName .. namePostfix,
-					desc = spellName,
+					name = namePrefix .. spellTitle .. namePostfix,
+					desc = spellTitle,
 					order = i,
 					inline = true,
 					args = {
