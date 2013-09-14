@@ -931,11 +931,11 @@ Atemi.defaults = { -- {{{
 		xOffset = 0,
 		yOffset = 22,
 		gapSize = 2,        -- gap in pixel between the cooldown icons
-		iconSize = 22,      -- size in pixel of each cooldown icon
+		iconSize = 24,      -- size in pixel of each cooldown icon
 		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
 		showTooltips = true,-- show spell tooltips when hovering the icon atop their nameplates
 		autoAdjustSizes = false, -- automatically adjust icon/font sizes relative to their nameplate width
-		fontSize = ceil(22 * 0.75),
+		fontSize = ceil(24 * 0.5),
 		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
 		textColor = { red = 0.7, green = 1.0, blue = 0.0 },
 		announceUsed = {},  -- list of spells to announce on use
