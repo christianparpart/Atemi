@@ -119,7 +119,7 @@ end
 function AtemiCooldown:onIconUpdate()
 	local itimer = round(self.endTime - GetTime())
 
-	if itimer >= 60 then
+	if itimer > 60 then
 		self.iconText:SetText(round(itimer / 60) .. "m")
 	elseif itimer < 60 and itimer >= 1 then
 		self.iconText:SetText(ceil(itimer))
