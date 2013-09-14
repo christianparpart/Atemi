@@ -1,0 +1,75 @@
+------------------------------------------------------------------------
+r1098 | nevcairiel | 2013-09-13 15:11:20 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   A /tags/Release-r1098 (from /trunk:1097)
+
+Tag as Release-r1098
+------------------------------------------------------------------------
+r1097 | nevcairiel | 2013-09-13 15:10:22 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/changelog.txt
+
+Update changelog
+------------------------------------------------------------------------
+r1096 | nevcairiel | 2013-09-13 15:05:40 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceDB-3.0/AceDB-3.0.lua
+
+AceDB-3.0: Switch characters to the default profile if their active profile is deleted (Ticket #324)
+------------------------------------------------------------------------
+r1095 | nevcairiel | 2013-09-13 14:55:07 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIWidget-EditBox.lua
+
+AceGUI-3.0: EditBox: Allow dragging macros to the editbox (which will then contain the macros name) (Ticket #337)
+------------------------------------------------------------------------
+r1094 | nevcairiel | 2013-09-13 14:50:58 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIWidget-Button.lua
+
+AceGUI-3.0: Button: Add a new "Auto Width" option (Ticket #310)
+------------------------------------------------------------------------
+r1093 | nevcairiel | 2013-09-13 14:46:46 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua
+
+AceGUI-3.0: TreeGroup: Remove left over debug code
+------------------------------------------------------------------------
+r1092 | nevcairiel | 2013-09-13 14:45:47 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIContainer-TreeGroup.lua
+
+AceGUI-3.0: TreeGroup: Fix an issue introduced by 5.4 broken scrollbars (Ticket #345)
+------------------------------------------------------------------------
+r1091 | nevcairiel | 2013-09-13 14:42:34 +0000 (Fri, 13 Sep 2013) | 3 lines
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIWidget-DropDown.lua
+
+AceGUI-3.0: DropDown: Make the entire DropDown widget clickable (Ticket #339)
+
+Patch by SinusPi
+------------------------------------------------------------------------
+r1090 | nevcairiel | 2013-09-13 14:37:43 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceHook-3.0/AceHook-3.0.lua
+
+AceHook-3.0: Allow hooking of AnimationGroup scripts (Ticket #314)
+------------------------------------------------------------------------
+r1089 | nevcairiel | 2013-09-13 14:32:35 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceConfig-3.0/AceConfigDialog-3.0/AceConfigDialog-3.0.lua
+
+AceConfigDialog-3.0: Try to prevent static popup taint (Ticket #322)
+------------------------------------------------------------------------
+r1088 | nevcairiel | 2013-09-13 14:28:29 +0000 (Fri, 13 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/AceGUI-3.0/widgets/AceGUIWidget-Slider.lua
+
+AceGUI-3.0: Slider: Add a workaround for the broken slider steps in WoW 5.4 (Ticket #346)
+------------------------------------------------------------------------
+r1087 | kaelten | 2013-09-11 02:48:09 +0000 (Wed, 11 Sep 2013) | 1 line
+Changed paths:
+   M /trunk/Ace3.toc
+
+Updating TOC for 5.4
+------------------------------------------------------------------------
