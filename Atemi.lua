@@ -426,6 +426,7 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[36554] = 24,				--"Shadowstep",
 	[74001] = 120,				--"Combat Readiness",
 	[31230] = 90,				--"Cheat Death",
+	[137619] = 60,				--"Mark for Death",
 
 	-- specialization
 	[79140] = 120,				--"Vendetta",
@@ -571,6 +572,7 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		31230, -- Cheat Death
 		36554, -- Shadowstep
 		74001, -- Combat Readiness
+		137619,-- Mark for Death
 
 		-- specialization
 		13750, -- Adrenaline Rush
