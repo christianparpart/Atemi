@@ -440,7 +440,7 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[57994] = 12,				-- Wind Shear
 	[51886] = 8,				-- Cleanse Spirit
 	[8056] = 6,					-- Frost Shock
-	[8711] = 25,				-- Grounding Totem
+	[8177] = 25,				-- Grounding Totem
 	[8143] = 60,				-- Tremor Totem
 	[51514] = 45,				-- Hex
 	[79206] = 120,				-- Spiritwalker's Grace
@@ -732,7 +732,7 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		57994, -- Wind Shear
 		51886, -- Cleanse Spirit
 		8056, -- Frost Shock
-		8711, -- Grounding Totem
+		8177, -- Grounding Totem
 		8143, -- Tremor Totem
 		51514, -- Hex
 		79206, -- Spiritwalker's Grace
@@ -888,7 +888,7 @@ Atemi.COOLDOWN_RESET_MAP = {
 		120,   -- Cone of Cold
 	},
 	[108285] = { -- Shaman: Call of the Elements
-		8711, -- Grounding Totem
+		8177, -- Grounding Totem
 		8143, -- Tremor Totem
 		51485, -- Earthgrab Totem
 		108273, -- Windwalk Totem
