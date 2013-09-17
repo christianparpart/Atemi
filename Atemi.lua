@@ -1760,17 +1760,21 @@ function Atemi:OnTimerCallback(elapsed)
 				end
 
 				-- install icon-hide handler
-				frame:HookScript("OnHide", function()
-					self:Debug(1, "Nameplate.OnHide(" .. playerName .. ")")
-					local playerCooldowns = self.cooldowns[playerName]
-					if playerCooldowns then
-						for _, cooldown in ipairs(playerCooldowns) do
-							self:Debug(2, "hide cd " .. cooldown.spellName)
-							cooldown:Hide()
+				if not frame.atemiHooked then
+					frame.atemiHooked = true
+
+					frame:HookScript("OnHide", function()
+						self:Debug(1, "Nameplate.OnHide(" .. playerName .. ")")
+						local playerCooldowns = self.cooldowns[playerName]
+						if playerCooldowns then
+							for _, cooldown in ipairs(playerCooldowns) do
+								self:Debug(2, "hide cd " .. cooldown.spellName)
+								cooldown:Hide()
+							end
 						end
-					end
-					--frame:HookScript("OnHide", nil)
-				end)
+						--frame:HookScript("OnHide", nil)
+					end)
+				end
 			end
 		end
 	end
