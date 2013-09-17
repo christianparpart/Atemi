@@ -1,5 +1,5 @@
 -- Atemi
--- Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>
+-- Copyright (c) 2011-2013 by Christian Parpart <trapni@gentoo.org>
 --
 -- This addon is inspired and based on Icicle, which I was to improve
 -- UI-based configurability and a higher focus on Arena cooldowns.
@@ -1454,7 +1454,7 @@ function Atemi:OnInitialize()
 
 	if self.db.profile.showGreeter then
 		Atemi:Print("|cffff6600" .. "Atemi Enemy Cooldown Tracker")
-		Atemi:Print("|cffffaa42" .. "Copyright (c) 2011 by Christian Parpart <trapni@gentoo.org>")
+		Atemi:Print("|cffffaa42" .. "Copyright (c) 2011-2013 by Christian Parpart <trapni@gentoo.org>")
 		Atemi:Print("|cffffaa42" .. L["Use /atemi command to open configuration UI."])
 	end
 
