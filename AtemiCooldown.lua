@@ -48,7 +48,7 @@ function AtemiCooldown:new(spellID, endTime, db)
 	self.texture = texture
 	self.endTime = endTime
 
-	Atemi:Debug("New Spell cooldown (" .. tostring(spellID) .. ") " .. name .. "")
+	Atemi:Debug(1, "New Spell cooldown (" .. tostring(spellID) .. ") " .. name .. "")
 
 	return self
 end
@@ -58,7 +58,7 @@ end
 -- @param nameplate the nameplate UI element this cooldown belongs to.
 --
 function AtemiCooldown:BindToNameplate(nameplate)
-	Atemi:Debug("Bind Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
+	Atemi:Debug(1, "Bind Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
 	self.nameplate = nameplate
 
 	if not self.icon then
@@ -133,7 +133,7 @@ end
 -- You must BindToNameplate() in order to show the icon again.
 --
 function AtemiCooldown:Hide()
-	Atemi:Debug("Hide Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
+	Atemi:Debug(1, "Hide Spell cooldown (" .. tostring(self.spellID) .. ") " .. self.spellName .. "")
 	if self.icon then
 		self.icon:Hide()
 		self.icon:SetScript("OnUpdate", nil)
