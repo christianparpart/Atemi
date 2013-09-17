@@ -1463,6 +1463,7 @@ function Atemi:OnInitialize()
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("Atemi", "Atemi")
 
 	self:RegisterChatCommand("atemi", self.OpenConfig)
+	self:RegisterChatCommand("rl", ReloadUI)
 
 	-- work vars
 	self.cooldowns = {}
