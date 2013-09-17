@@ -236,7 +236,7 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[106952] = 180,				-- Berserk
 	[112071] = 180,				-- Celestial Alignment
 	[102342] = 120,				-- Ironbark
-	[88432] = 8,				-- Nature's Cure
+	[88423] = 8,				-- Nature's Cure
 	[2782] = 8,					-- Remove Corruption
 	[106839] = 15,				-- Skull Bash
 	[78675] = 60,				-- Solar Beam
@@ -720,7 +720,7 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		106952, -- Berserk
 		112071, -- Celestial Alignment
 		102342, -- Ironbark
-		88432,  -- Nature's Cure
+		88423,  -- Nature's Cure
 		2782,   -- Remove Corruption
 		106839, -- Skull Bash
 		78675,  -- Solar Beam
