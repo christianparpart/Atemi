@@ -906,6 +906,7 @@ Atemi.defaults = { -- {{{
 		iconSize = 24,      -- size in pixel of each cooldown icon
 		autoScale = true,   -- auto-scale icon sizes to fit nameplate width as max value
 		showTooltips = true,-- show spell tooltips when hovering the icon atop their nameplates
+		showFriendlyCooldowns = false, -- show cooldowns of friendly targets
 		autoAdjustSizes = false, -- automatically adjust icon/font sizes relative to their nameplate width
 		fontSize = ceil(24 * 0.5),
 		fontPath = "Interface\\AddOns\\Atemi\\FreeUniversal-Regular.ttf",
@@ -1130,7 +1131,7 @@ function Atemi:setupOptions()
 						type = 'toggle',
 						name = L['Resize icons/fonts'],
 						desc = L['Automatically adjust icon/font-sizes relative to their nameplate width (if they would exceed).'],
-						order = 3,
+						order = 4,
 						get = function()
 							return Atemi.db.profile.autoAdjustSizes
 						end,
@@ -1138,34 +1139,16 @@ function Atemi:setupOptions()
 							Atemi.db.profile.autoAdjustSizes = value
 						end
 					},
-					gapSize = {
-						type = 'range',
-						name = L['Icon gap size'],
-						desc = L['gap in pixels between the cooldown icons'],
-						order = 4,
-						min = 0,
-						max = 64,
-						step = 1,
-						get = function()
-							return Atemi.db.profile.gapSize
-						end,
-						set = function(info, value)
-							Atemi.db.profile.gapSize = value
-						end
-					},
-					iconSize = {
-						type = 'range',
-						name = L['Icon size'],
-						desc = L['size of the cooldown icons in pixels'],
+					showFriendlyCooldowns = {
+						type = 'toggle',
+						name = L['Show friendly CDs'],
+						desc = L['Show spell cooldowns of friendly targets on their nameplates (must have friendly nameplates activated).'],
 						order = 5,
-						min = 16,
-						max = 128,
-						step = 1,
 						get = function()
-							return Atemi.db.profile.iconSize
+							return Atemi.db.profile.showFriendlyCooldowns
 						end,
 						set = function(info, value)
-							Atemi.db.profile.iconSize = value
+							Atemi.db.profile.showFriendlyCooldowns = value
 						end
 					},
 					fontSize = {
@@ -1183,11 +1166,41 @@ function Atemi:setupOptions()
 							Atemi.db.profile.fontSize = value
 						end
 					},
+					gapSize = {
+						type = 'range',
+						name = L['Icon gap size'],
+						desc = L['gap in pixels between the cooldown icons'],
+						order = 7,
+						min = 0,
+						max = 64,
+						step = 1,
+						get = function()
+							return Atemi.db.profile.gapSize
+						end,
+						set = function(info, value)
+							Atemi.db.profile.gapSize = value
+						end
+					},
+					iconSize = {
+						type = 'range',
+						name = L['Icon size'],
+						desc = L['size of the cooldown icons in pixels'],
+						order = 8,
+						min = 16,
+						max = 128,
+						step = 1,
+						get = function()
+							return Atemi.db.profile.iconSize
+						end,
+						set = function(info, value)
+							Atemi.db.profile.iconSize = value
+						end
+					},
 					xOffset = {
 						type = 'range',
 						name = L['X-offset'],
 						desc = L['icon offset to the X-axis relative to its nameplate parent'],
-						order = 7,
+						order = 9,
 						min = -64,
 						max = 64,
 						step = 1,
@@ -1202,7 +1215,7 @@ function Atemi:setupOptions()
 						type = 'range',
 						name = L['Y-offset'],
 						desc = L['icon offset to the Y-axis relative to its nameplate parent'],
-						order = 8,
+						order = 10,
 						min = -64,
 						max = 64,
 						step = 1,
@@ -1224,7 +1237,7 @@ function Atemi:setupOptions()
 					monk = {
 						type = 'group',
 						name = L['Monk'],
-						order = 1,
+						order = 0,
 						args = self:GetClassOptions("Monk")
 					},
 					rogue = {
@@ -1524,12 +1537,12 @@ function Atemi:COMBAT_LOG_EVENT_UNFILTERED(...)
 	local isSpellCast = eventType == "SPELL_CAST_SUCCESS" or eventType == "SPELL_AURA_APPLIED" or eventType == "SPELL_MISSED" or eventType == "SPELL_SUMMON"
 	local isCooldown = self.SPELL_COOLDOWN_MAP[spellID] ~= nil
 	local isCooldownResetSpell = self.COOLDOWN_RESET_MAP[spellID] ~= nil
+	local mayShowForTarget = isHostile or self.db.profile.showFriendlyCooldowns
 
-	spellName = spellName or "<no-spellname>"
+	if isCooldown and isSpellCast and mayShowForTarget then
+		spellName = spellName or "<no-spellname>"
+		self:Debug(2, "spell(" .. spellName .. ") isCooldown:" , (self.SPELL_COOLDOWN_MAP[spellID] ~= nil))
 
-	self:Debug(2, "spell(" .. spellName .. ") isCooldown:" , (self.SPELL_COOLDOWN_MAP[spellID] ~= nil))
-
-	if isCooldown and isHostile and isSpellCast then
 		local timeNow = GetTime()
 		local playerName = strmatch(srcName, "[%P]+")
 
