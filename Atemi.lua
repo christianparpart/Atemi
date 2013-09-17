@@ -254,7 +254,6 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[1543] = 20,				-- Flare
 	[13809] = 30,				-- Ice Trap
 	[3045] = 180,				-- Rapid Fire
-	[23989] = 300,				-- Readiness
 	[34600] = 30,				-- Snake Trap
 	[53271] = 45,				-- Master's Call
 	[19263] = 120,				-- Deterrence
@@ -663,7 +662,6 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		1543, -- Flare
 		13809, -- Ice Trap
 		3045, -- Rapid Fire
-		23989, -- Readiness
 		34600, -- Snake Trap
 		53271, -- Master's Call
 		19263, -- Deterrence
@@ -886,30 +884,6 @@ Atemi.COOLDOWN_RESET_MAP = {
 		36554, -- Evasion
 		51722, -- Dismantle
 	},
-	[23989] = { -- Hunter: Readiness
-		781,     -- Disengage
-		19503,   -- Scatter Shot
-		1499,    -- Freezing Trap
-		5384,    -- Feign Death
-		1543,    -- Flare
-		13809,   -- Ice Trap
-		3045,    -- Rapid Fire
-		34600,   -- Snake Trap
-		53271,   -- Master's Call (?)
-		19263,   -- Deterrence
-		51753,   -- Camouflage
-		109248,  -- Binding Shot
-		34490,   -- Silencing Shot
-		19386,   -- Wyvern String
-		109304,  -- Exhilaration
-		120679,  -- Dire Beast
-		131894,  -- A Murder of Crows
-		1330392, -- Blink Strike (?)
-		120360,  -- Barrage
-		109259,  -- Powershot
-		19574,   -- Bestial Wrath
-		19577,   -- Intimidation
-	},
 	[11958] = { -- Mage: Cold Snap
 		45438, -- Ice Block
 		122,   -- Frost Nova
@@ -1024,7 +998,6 @@ Atemi.defaults = { -- {{{
 			1499, -- Freezing Trap
 			13809, -- Ice Trap
 			3045, -- Rapid Fire
-			23989, -- Readiness
 			34600, -- Snake Trap
 			53271, -- Master's Call
 			19263, -- Deterrence
