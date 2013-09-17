@@ -483,7 +483,6 @@ Atemi.SPELL_COOLDOWN_MAP = { -- {{{
 	[108503] = 120,				-- Grimoire of Sacrifice
 	[108501] = 120,				-- Grimoire of Service
 	[108505] = 120,				-- Archimonde's Vengeance
-	[119049] = 60,				-- Kil'jaeden's Cunning
 
 	-- specialization
 	[109151] = 10,				-- Demonic Leap
@@ -775,7 +774,6 @@ Atemi.CLASS_COOLDOWN_MAP = { -- {{{
 		108503, -- Grimoire of Sacrifice
 		108501, -- Grimoire of Service
 		108505, -- Archimonde's Vengeance
-		119049, -- Kil'jaeden's Cunning
 
 		-- specialization
 		109151, -- Demonic Leap
