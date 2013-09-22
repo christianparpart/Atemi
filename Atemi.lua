@@ -1683,9 +1683,7 @@ function Atemi:NameplateNameOf(nameplateFrame)
 	_, nameplateFrame.nameFrame = nameplateFrame:GetChildren()
 	local name = nameplateFrame.nameFrame:GetRegions()
 	name = name:GetText()
-	self:Debug(0, "Name: " .. name)
-	self:DumpFrame(nameplateFrame.nameFrame:GetRegions(), "[" .. name .. "] ")
---	name = gsub(name, '%s%(%*%)', '')
+	name = gsub(name, '%s%(%*%)', '')
 	return name
 
 --[[ XXX the version below doesn't seem to work with players from remote realms

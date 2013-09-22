@@ -2,7 +2,7 @@
 ## X-Min-Interface: 50300
 ## Title: Atemi
 ## Notes: Flexible Enemy Cooldown Tracking
-## Version: 0.6.1
+## Version: 0.6.1.1
 ## Author: Christian Parpart
 ## SavedVariables: AtemiDB
 ## X-Website: http://github.com/trapni/Atemi
