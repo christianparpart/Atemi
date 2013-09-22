@@ -1665,6 +1665,8 @@ function Atemi:DumpFrame(frame, prefix)
 					self:DumpFrame(select(i, frame:GetChildren()), "        "..prefix.."/c"..i) 
 				end
 			end
+		else
+			self:Debug(0, prefix .. "/object: " .. frame:GetObjectType())
 		end
 	end
 end
@@ -1675,14 +1677,25 @@ end
   @param  nameplateFrame the frame of a nameplate
 
   @return Retrieves the player name as text
-
-  For this to work, we expect a certain layout of how a nameplate is composed,
-  and this appearently has changed in history, even w/o any other addons interfering.
-
-  The second child frame of the nameplate-frame is the playername frame, whose first and only
-  region contains the textual information.
 ]]
 function Atemi:NameplateNameOf(nameplateFrame)
+	local _
+	_, nameplateFrame.nameFrame = nameplateFrame:GetChildren()
+	local name = nameplateFrame.nameFrame:GetRegions()
+	name = name:GetText()
+	self:Debug(0, "Name: " .. name)
+	self:DumpFrame(nameplateFrame.nameFrame:GetRegions(), "[" .. name .. "] ")
+--	name = gsub(name, '%s%(%*%)', '')
+	return name
+
+--[[ XXX the version below doesn't seem to work with players from remote realms
+
+--  For this to work, we expect a certain layout of how a nameplate is composed,
+--  and this appearently has changed in history, even w/o any other addons interfering.
+--
+--  The second child frame of the nameplate-frame is the playername frame, whose first and only
+--  region contains the textual information.
+
 	local numChildren = nameplateFrame:GetNumChildren();
 	assert(numChildren >= 2)
 	local playerNameFrame = select(2, nameplateFrame:GetChildren())
@@ -1690,6 +1703,7 @@ function Atemi:NameplateNameOf(nameplateFrame)
 	local playerNameRegion = select(1, playerNameFrame:GetRegions())
 
 	return playerNameRegion:GetText()
+	]]
 end
 
 --[[
